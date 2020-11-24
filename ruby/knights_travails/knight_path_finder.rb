@@ -36,6 +36,26 @@ class KnightPathFinder
     end
   end
 
+  def find_path(end_pos)
+    trace_back_path(@root_node.bfs(end_pos))
+  end
+
+  private
+
+  def trace_back_path(end_node)
+    path = []
+    current_node = end_node
+    while true
+      path.push(current_node.value)
+      parent_node = current_node.parent
+      if parent_node != nil
+        current_node = parent_node
+      else
+        return path.reverse
+      end
+    end
+  end
+
   def new_move_positions(pos)
     valid_moves = KnightPathFinder.valid_moves(pos)
     new_moves = valid_moves.select do |move|
@@ -51,7 +71,3 @@ class KnightPathFinder
     new_moves
   end
 end
-
-kpf = KnightPathFinder.new
-
-

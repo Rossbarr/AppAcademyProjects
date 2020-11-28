@@ -1,7 +1,7 @@
 import numpy as np
-import piece
+from piece import Piece
 
-class Pawn(piece.Piece):
+class Pawn(Piece):
     def symbol(self):
         return "p"
 

@@ -1,8 +1,8 @@
 import numpy as np
-import piece
+from piece import Piece
 import stepable as s
 
-class Knight(piece.Piece):
+class Knight(Piece):
     moves = s.moves
 
     def symbol(self):

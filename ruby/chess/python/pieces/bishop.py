@@ -1,8 +1,8 @@
 import numpy as np
-import piece
+from piece import Piece
 import slideable as s
 
-class Bishop(piece.Piece):
+class Bishop(Piece):
     moves = s.moves
     grow_unblocked_moves_in_dir = s.grow_unblocked_moves_in_dir
 

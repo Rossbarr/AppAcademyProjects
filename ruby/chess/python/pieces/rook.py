@@ -1,14 +1,13 @@
 import numpy as np
-import piece
+from piece import Piece
 import slideable as s
 
-class Queen(piece.Piece):
+class Rook(Piece):
     moves = s.moves
     grow_unblocked_moves_in_dir = s.grow_unblocked_moves_in_dir
 
     def symbol(self):
-        return "Q"
+        return "R"
 
     def _move_dirs(self):
-        return np.concatenate((s.ORTHOGONAL_DIRS, s.DIAGONAL_DIRS))
-
+        return np.array(s.ORTHOGONAL_DIRS)

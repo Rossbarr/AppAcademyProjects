@@ -1,7 +1,5 @@
-import numpy as np
-
-ORTHOGONAL_DIRS = np.array([[1, 0], [-1, 0], [0, 1], [0, -1]])
-DIAGONAL_DIRS = np.array([[1, 1], [-1, -1], [1, -1], [-1, 1]])
+ORTHOGONAL_DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+DIAGONAL_DIRS = [[1, 1], [-1, -1], [1, -1], [-1, 1]]
 
 def moves(piece):
     moves = []

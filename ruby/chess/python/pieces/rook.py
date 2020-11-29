@@ -1,4 +1,3 @@
-import numpy as np
 from piece import Piece
 import slideable as s
 
@@ -6,8 +5,9 @@ class Rook(Piece):
     moves = s.moves
     grow_unblocked_moves_in_dir = s.grow_unblocked_moves_in_dir
 
-    def symbol(self):
-        return "R"
+    def __init__(self, color, board, pos):
+        super().__init__(color, board, pos)
+        self.symbol = "R"
 
     def _move_dirs(self):
-        return np.array(s.ORTHOGONAL_DIRS)
+        return s.ORTHOGONAL_DIRS

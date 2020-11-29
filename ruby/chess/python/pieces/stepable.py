@@ -1,5 +1,3 @@
-import numpy as np
-
 def moves(piece):
     moves = []
     move_diffs = piece._move_diffs()
@@ -9,8 +7,6 @@ def moves(piece):
         new_pos = [x+dx, y+dy]
         if not piece.board.valid(new_pos):
             continue
-        if piece.board.empty(new_pos):
-            moves.append(new_pos)
-        elif piece.board.rows[x+dx, y+dy].color != piece.color:
+        if piece.board.empty(new_pos) or piece.board.rows[x+dx, y+dy].color != piece.color:
             moves.append(new_pos)
     return moves

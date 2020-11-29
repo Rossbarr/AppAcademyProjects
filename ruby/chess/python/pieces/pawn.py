@@ -1,24 +1,24 @@
-import numpy as np
 from piece import Piece
 
 class Pawn(Piece):
-    def symbol(self):
-        return "p"
+    def __init__(self, color, board, pos):
+        super().__init__(color, board, pos)
+        self.symbol = "p"
 
     def moves(self):
         """
-        Returns a numpy array of the possible forward movements and diagonal attacks
+        Returns a list of the possible forward movements and diagonal attacks
         """
         forwards = self.__forward_steps()
         diags = self.__side_attacks()
         if len(forwards) > 0 and len(diags) > 0:
-            result = np.concatenate((self.__forward_steps(), self.__side_attacks()))
+            result = self.__forward_steps() + self.__side_attacks()
         elif len(forwards) > 0:
-            result = np.array(forwards)
+            result = forwards
         elif len(diags) > 0:
-            result = np.array(diags)
+            result = diags
         else:
-            result = np.array([])
+            result = []
         return result
 
     def __at_start_row(self):
@@ -29,7 +29,7 @@ class Pawn(Piece):
             start_row = 6
         else:
             print("The pawn color is {}".format(self.color))
-            raise StandardError("Pawn color is not white or black")
+            raise Exception("Pawn color is not white or black")
         
         return True if (self.pos[0] == start_row) else False
 
@@ -40,7 +40,7 @@ class Pawn(Piece):
             forward = -1
         else:
             print("The pawn color is {}".format(self.color))
-            raise StandardError("Pawn color is not white or black")
+            raise Exception("Pawn color is not white or black")
 
         return forward
 
@@ -55,7 +55,7 @@ class Pawn(Piece):
             # If there's something immediately in front of the pawn, it is stuck
             if self.__at_start_row() and self.board.empty([x + forward + forward, y]):
                 moves.append([x + forward + forward, y])
-        
+
         return moves
 
     def __side_attacks(self):
@@ -64,11 +64,11 @@ class Pawn(Piece):
         moves = []
         left = [x + forward, y - 1]
         right = [x + forward, y + 1]
-        if not self.board.empty(left):
-            if self.board[x + forward, y - 1].color != self.color:
+        if self.board.valid(left) and not self.board.empty(left):
+            if self.board.rows[x + forward, y - 1].color != self.color:
                 moves.append(left)
-        if not self.board.empty(right):
-            if self.board[x + forward, y + 1].color != self.color:
+        if self.board.valid(right) and not self.board.empty(right):
+            if self.board.rows[x + forward, y + 1].color != self.color:
                 moves.append(right)
 
         return moves

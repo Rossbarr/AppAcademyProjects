@@ -20,7 +20,7 @@ class Board():
         self.__fill_back_row()
         self.__fill_pawns_row()
 
-    def move_piece(self, color, start_pos, end_pos):
+    def move(self, color, start_pos, end_pos):
         a, b = start_pos
         x, y = end_pos
        

@@ -8,6 +8,4 @@ class Bishop(Piece):
     def __init__(self, color, board, pos):
         super().__init__(color, board, pos)
         self.symbol = "B"
-
-    def _move_dirs(self):
-        return s.DIAGONAL_DIRS
+        self._move_dirs = s.DIAGONAL_DIRS

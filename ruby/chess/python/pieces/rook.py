@@ -8,6 +8,4 @@ class Rook(Piece):
     def __init__(self, color, board, pos):
         super().__init__(color, board, pos)
         self.symbol = "R"
-
-    def _move_dirs(self):
-        return s.ORTHOGONAL_DIRS
+        self._move_dirs = s.ORTHOGONAL_DIRS

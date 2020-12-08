@@ -4,6 +4,7 @@ class Pawn(Piece):
     def __init__(self, color, board, pos):
         super().__init__(color, board, pos)
         self.symbol = "p"
+        self.forward = self.__forward_dir()
 
     def moves(self):
         """
@@ -22,6 +23,9 @@ class Pawn(Piece):
         return result
 
     def __at_start_row(self):
+        """
+        Checks if the pawn is on the start row.
+        """
         start_row = 8
         if self.color == "black":
             start_row = 1
@@ -34,6 +38,9 @@ class Pawn(Piece):
         return True if (self.pos[0] == start_row) else False
 
     def __forward_dir(self):
+        """
+        Sets forward direction.
+        """
         if self.color == "black":
             forward = 1
         elif self.color == "white":
@@ -47,7 +54,7 @@ class Pawn(Piece):
     def __forward_steps(self):
         x, y = self.pos
         moves = []
-        forward = self.__forward_dir()
+        forward = self.forward
         # Check if there's something in front of the pawn
         if self.board.empty([x + forward, y]):
             moves.append([x + forward, y])
@@ -60,7 +67,7 @@ class Pawn(Piece):
 
     def __side_attacks(self):
         x, y = self.pos
-        forward = self.__forward_dir()
+        forward = self.forward
         moves = []
         left = [x + forward, y - 1]
         right = [x + forward, y + 1]

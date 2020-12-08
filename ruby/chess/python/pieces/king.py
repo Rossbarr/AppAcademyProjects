@@ -7,6 +7,4 @@ class King(Piece):
     def __init__(self, color, board, pos):
         super().__init__(color, board, pos)
         self.symbol = "K"
-
-    def _move_diffs(self):
-        return [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
+        self._move_diffs = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]

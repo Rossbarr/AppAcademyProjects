@@ -8,7 +8,5 @@ class Queen(Piece):
     def __init__(self, color, board, pos):
         super().__init__(color, board, pos)
         self.symbol = "Q"
-
-    def _move_dirs(self):
-        return s.ORTHOGONAL_DIRS + s.DIAGONAL_DIRS
+        self._move_dirs = s.ORTHOGONAL_DIRS + s.DIAGONAL_DIRS
 

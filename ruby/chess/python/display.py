@@ -3,9 +3,10 @@ import board
 from PIL import ImageTk
 
 class Display(tk.Frame):
-    def __init__(self, main, board):
+    def __init__(self, main, game, board):
         self.main = main
         main.title("Chessboard")
+        self.game = game
         self.board = board
         self.selected_piece = (self.board.nothing, None)
         self.highlighted = (self.board.nothing, None)
@@ -24,28 +25,20 @@ class Display(tk.Frame):
 
         print("You clicked {}, {}".format(current_col, current_row))
         
-        position = [current_col, current_row]
-        piece = self.board.rows[current_col, current_row]
+        clicked_position = [current_col, current_row]
+        piece = self.selected_piece[0]
+        piece_position = self.selected_piece[1]
         
-        if self.selected_piece[0] is not self.board.nothing:
-            try:
-                self.move(self.selected_piece[0].color, self.selected_piece[1], position)
-            except Exception:
-                print("Exception occurred, try again.")
+        if piece is not self.board.nothing:
+            self.move(piece_position, clicked_position)
             self.selected_piece = (self.board.nothing, None)
             self.highlighted = (self.board.nothing, None)
             self.pieces = {}
             self.refresh()
             self.draw_pieces()
         else:
-            self.highlight(position)
+            self.highlight(clicked_position)
             self.refresh()
-
-    def reset(self):
-        pass
-
-    def chessboard_save_to_file(self):
-        pass
 
     def refresh(self, event = {}):
         if event:
@@ -76,24 +69,14 @@ class Display(tk.Frame):
         self.canvas.tag_raise("piece")
         self.canvas.tag_lower("square")
 
-    def move(self, color, position1, position2):
-        self.board.move(color, position1, position2)
+    def move(self, start_position, end_position):
+        self.game.move(start_position, end_position)
 
     def highlight(self, position):
         piece = self.board.rows[position[0], position[1]]
         if piece is not self.board.nothing and piece.color == piece.color: #check current player color against piece color
             self.selected_piece = (piece, position)
             self.highlighted = (piece, piece.valid_moves())
-
-    def addpiece(self, name, image, row, column):
-        self.canvas.create_image(0, 0, image=image, tags=(name, "piece"), anchor="c")
-        self.placepiece(name, row, column)
-
-    def placepiece(self, name, row, column):
-        self.pieces[name] = (row, column)
-        x = (column * 64) + 32
-        y = ((row) * 64) + 32
-        self.canvas.coords(name, x, y)
 
     def draw_pieces(self):
         self.canvas.delete("piece")
@@ -109,6 +92,24 @@ class Display(tk.Frame):
 
                     self.addpiece(piecename, self.icons[filename], x, y)
 
+    def addpiece(self, name, image, row, column):
+        self.canvas.create_image(0, 0, image=image, tags=(name, "piece"), anchor="c")
+        self.placepiece(name, row, column)
+
+    def placepiece(self, name, row, column):
+        self.pieces[name] = (row, column)
+        x = (column * 64) + 32
+        y = ((row) * 64) + 32
+        self.canvas.coords(name, x, y)
+
+    def reset(self):
+        self.game.reset()
+        self.selected_piece = (self.board.nothing, None)
+        self.highlighted = (self.board.nothing, None)
+        self.pieces = {}
+        self.refresh()
+        self.draw_pieces()
+
     def __create_board(self):
         tk.Frame.__init__(self, self.main)
 
@@ -118,26 +119,19 @@ class Display(tk.Frame):
         self.canvas.bind("<Configure>", self.refresh)
         self.canvas.bind("<Button-1>", self.click)
 
-
     def __create_statusbar(self):
         self.statusbar = tk.Frame(self, height=64)
         
         self.button_quit = tk.Button(self.statusbar, text="New", fg="black", command=self.reset)
         self.button_quit.pack(side=tk.LEFT, in_=self.statusbar)
 
-        self.button_save = tk.Button(self.statusbar, text="Save", fg="black", command=self.chessboard_save_to_file)
-        self.button_save.pack(side=tk.LEFT, in_=self.statusbar)
+        # self.button_save = tk.Button(self.statusbar, text="Save", fg="black", command=self.chessboard_save_to_file)
+        # self.button_save.pack(side=tk.LEFT, in_=self.statusbar)
 
-        self.label_status = tk.Label(self.statusbar, text="   White's Turn   ", fg="black")
+        self.label_status = tk.Label(self.statusbar, text="      ", fg="black")
         self.label_status.pack(side=tk.LEFT, in_=self.statusbar)
 
         self.button_quit = tk.Button(self.statusbar, text="Quit", fg="black", command=self.main.destroy)
         self.button_quit.pack(side=tk.LEFT, in_=self.statusbar)
 
         self.statusbar.pack(expand=False, fill="x", side="bottom")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    gui = Display(root, board.Board())
-    gui.pack(side="top", fill="both", expand="true", padx=4, pady=4)
-    root.mainloop()

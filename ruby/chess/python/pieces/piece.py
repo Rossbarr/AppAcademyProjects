@@ -34,6 +34,17 @@ class Piece():
         self.board = board
         self.pos = pos
 
+    def moves(self):
+        """
+        This method is to be overwritten by all child class pieces.
+        
+        This method (when overwritten by a child class) will return an array.
+        This array contains the possible movement locations of that piece.
+        Since pieces move different according to what they are,
+        this method will be defined in each piece.
+        """
+        return []
+
     def valid_moves(self):
         """
         This method may seem confusing if you haven't looked at an individual piece to see what

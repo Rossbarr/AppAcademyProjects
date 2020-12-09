@@ -11,7 +11,7 @@ from pieces.knight import Knight
 from pieces.pawn import Pawn
 from pieces.piece import NullPiece
 
-class Board():
+class Board:
     deepcopy = deepcopy
 
     def __init__(self):
@@ -22,7 +22,6 @@ class Board():
 
     def move(self, color, start_pos, end_pos):
         a, b = start_pos
-        x, y = end_pos
        
         if self.empty(start_pos):
             raise Exception("No piece at start_pos to be moved")
@@ -45,7 +44,7 @@ class Board():
     def checkmate(self, color):
         if not self.in_check(color): return False
 
-        pieces = self.find_pieces()
+        pieces = self.find_pieces(color)
         for piece in pieces:
             if len(piece.valid_moves()) > 0:
                 return False

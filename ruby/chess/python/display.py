@@ -11,9 +11,8 @@ from PIL import ImageTk
 
 class Display(tk.Frame):
     """
-    I'm still not sure how tkinter works,
-    but to get some functionally to our display we'll
-    inherit from tk.Frame.
+    To be honest, I'm still not sure how tkinter works,
+    but to get some functionally to our display we'll inherit from tk.Frame.
     """
     def __init__(self, main, game, board):
         """
@@ -43,7 +42,11 @@ class Display(tk.Frame):
             otherwise it's empty.
             If you have any ideas or suggestions, let me know.
 
-        icons and pieces are 
+        icons assists in printing the images of the pieces to the screen.
+            It's a dictionary of each piece to its appropriate image file.
+            A white pawn, for example, will have it's own image. So will a black pawn.
+            draw_pieces() fills this dictionary in full the first time it's called.
+            To understand icons better, go to the draw_pieces() comments.
         """
         self.main = main
         main.title("Chessboard") # This just changes the window title.
@@ -52,7 +55,6 @@ class Display(tk.Frame):
         self.selected_piece = (self.board.nothing, None)
         self.highlighted = []
         self.icons = {}
-        self.pieces = {}
 
         self.__create_board()
         self.__create_statusbar()
@@ -74,7 +76,6 @@ class Display(tk.Frame):
             self.move(piece_position, clicked_position)
             self.selected_piece = (self.board.nothing, None)
             self.highlighted = []
-            self.pieces = {}
             self.refresh()
             self.draw_pieces()
         else:
@@ -89,24 +90,23 @@ class Display(tk.Frame):
 
         self.canvas.delete("square")
         color = "grey"
-        for row in range(8):
+        for x in range(8):
             color = "white" if color == "grey" else "grey"
-            for column in range(8):
-                x1 = (column * 64)
-                y1 = ((row) * 64)
-                x2 = x1 + 64
-                y2 = y1 + 64
-                if self.selected_piece[0] is not self.board.nothing and [row, column] == self.selected_piece[1]:
-                    self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="orange", tags="square")
-                elif [row, column] in self.highlighted:
-                    self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="spring green", tags="square")
+            for y in range(8):
+                column_start = (x * 64)
+                row_start = (y * 64)
+                column_end = column_start + 64
+                row_end = row_start + 64
+                if self.selected_piece[0] is not self.board.nothing and [x, y] == self.selected_piece[1]:
+                    self.canvas.create_rectangle(row_start, column_start, row_end, column_end, 
+                                                outline="black", fill="orange", tags="square")
+                elif [x, y] in self.highlighted:
+                    self.canvas.create_rectangle(row_start, column_start, row_end, column_end, 
+                                                outline="black", fill="spring green", tags="square")
                 else:
-                    self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tags="square")
+                    self.canvas.create_rectangle(row_start, column_start, row_end, column_end, 
+                                                outline="black", fill=color, tags="square")
                 color = "white" if color == "grey" else "grey"
-
-        for name in self.pieces:
-            self.placepiece(name, self.pieces[name][0], self.pieces[name][1])
-            print("ran")
 
         self.canvas.tag_raise("piece")
         self.canvas.tag_lower("square")
@@ -124,7 +124,7 @@ class Display(tk.Frame):
         self.canvas.delete("piece")
         for x in range(8):
             for y in range(8):
-                piece = self.board.rows[x][y]
+                piece = self.board.rows[x, y]
                 if piece is not self.board.nothing:
                     filename = "img/%s%s.png" % (piece.color, piece.symbol.lower())
                     piecename = "%s%s%s" % (piece.symbol, x, y)
@@ -134,15 +134,10 @@ class Display(tk.Frame):
 
                     self.addpiece(piecename, self.icons[filename], x, y)
 
-    def addpiece(self, name, image, row, column):
-        self.canvas.create_image(0, 0, image=image, tags=(name, "piece"), anchor="c")
-        self.placepiece(name, row, column)
-
-    def placepiece(self, name, row, column):
-        self.pieces[name] = (row, column)
-        x = (column * 64) + 32
-        y = ((row) * 64) + 32
-        self.canvas.coords(name, x, y)
+    def addpiece(self, name, image, x, y):
+        column = (x * 64) + 32
+        row = (y * 64) + 32
+        self.canvas.create_image(row, column, image=image, tags=(name, "piece"), anchor="c")
 
     def reset(self):
         self.game.reset()

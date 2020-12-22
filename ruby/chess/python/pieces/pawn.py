@@ -71,5 +71,15 @@ class Pawn(Piece):
         if self.board.valid(right) and not self.board.empty(right):
             if self.board.rows[x + forward, y + 1].color != self.color:
                 moves.append(right)
+        if x == 3 and forward == -1 and self.board.last_move[0].symbol == "p":
+            if self.board.last_move[1] == [1, y - 1] and self.board.last_move[2] == [3, y - 1]:
+                moves.append(left)
+            if self.board.last_move[1] == [1, y + 1] and self.board.last_move[2] == [3, y + 1]:
+                moves.append(right)
+        elif x == 4 and forward == 1  and self.board.last_move[0].symbol == "p":
+            if self.board.last_move[1] == [6, y - 1] and self.board.last_move[2] == [4, y - 1]:
+                moves.append(left)
+            if self.board.last_move[1] == [6, y + 1] and self.board.last_move[2] == [4, y + 1]:
+                moves.append(right)
 
         return moves

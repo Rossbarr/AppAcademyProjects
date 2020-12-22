@@ -16,6 +16,7 @@ class Board:
 
     def __init__(self):
         self.nothing = NullPiece()
+        self.last_move = (self.nothing, [0, 0], [0, 0])
         self.rows = np.full(shape = (8,8), fill_value = self.nothing)
         self.__fill_back_row()
         self.__fill_pawns_row()
@@ -88,11 +89,24 @@ class Board:
         piece = self.rows[a, b]
         if piece.symbol == "K" and abs(b - y) == 2:
             self.__castle(color, start_pos, end_pos)
+        elif (piece.symbol == "p" and 
+                self.last_move[0].symbol == "p" and
+                abs(self.last_move[2][0] - self.last_move[1][0]) == 2 and
+                (a == 3 and color == "white" or
+                a == 4 and color == "black") and
+                abs(y - b) == 1):
+            self.rows[self.last_move[2][0], self.last_move[2][1]] = self.nothing
+            self.rows[x, y] = piece
+            piece.pos = [x, y]
+            piece.moved = True
+            self.rows[a, b] = self.nothing
+            self.last_move = (piece, start_pos, end_pos)
         else:
             self.rows[x, y] = piece
             piece.pos = [x, y]
             piece.moved = True
             self.rows[a, b] = self.nothing
+            self.last_move = (piece, start_pos, end_pos)
 
     def __castle(self, color, start_pos, end_pos):
         a, b = start_pos
@@ -109,6 +123,7 @@ class Board:
             rook.moved = True
             self.rows[a, b] = self.nothing
             self.rows[a, 0] = self.nothing
+            self.last_move = (piece, start_pos, end_pos)
         else:
             rook = self.rows[a, 7]
             self.rows[x, y] = piece
@@ -119,7 +134,7 @@ class Board:
             rook.moved = True
             self.rows[a, b] = self.nothing
             self.rows[a, 7] = self.nothing
-
+            self.last_move = (piece, start_pos, end_pos)
 
     def __fill_back_row(self):
         back_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]

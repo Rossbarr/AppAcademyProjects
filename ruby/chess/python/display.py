@@ -108,6 +108,9 @@ class Display(tk.Frame):
                                                 outline="black", fill=color, tags="square")
                 color = "white" if color == "grey" else "grey"
 
+        text = "{}'s turn".format(self.game.current_player)
+        self.label_status['text'] = text
+
         self.canvas.tag_raise("piece")
         self.canvas.tag_lower("square")
 
@@ -116,7 +119,7 @@ class Display(tk.Frame):
 
     def highlight(self, position):
         piece = self.board.rows[position[0], position[1]]
-        if piece is not self.board.nothing and piece.color == piece.color: #check current player color against piece color
+        if piece is not self.board.nothing and piece.color == self.game.current_player:
             self.selected_piece = (piece, position)
             self.highlighted = piece.valid_moves()
 
@@ -133,7 +136,7 @@ class Display(tk.Frame):
                         self.icons[filename] = ImageTk.PhotoImage(file=filename, width=32, height=32)
 
                     self.addpiece(piecename, self.icons[filename], x, y)
-
+        
     def addpiece(self, name, image, x, y):
         column = (x * 64) + 32
         row = (y * 64) + 32
@@ -162,13 +165,10 @@ class Display(tk.Frame):
         self.button_quit = tk.Button(self.statusbar, text="New", fg="black", command=self.reset)
         self.button_quit.pack(side=tk.LEFT, in_=self.statusbar)
 
-        # self.button_save = tk.Button(self.statusbar, text="Save", fg="black", command=self.chessboard_save_to_file)
-        # self.button_save.pack(side=tk.LEFT, in_=self.statusbar)
-
-        self.label_status = tk.Label(self.statusbar, text="      ", fg="black")
-        self.label_status.pack(side=tk.LEFT, in_=self.statusbar)
-
         self.button_quit = tk.Button(self.statusbar, text="Quit", fg="black", command=self.main.destroy)
         self.button_quit.pack(side=tk.LEFT, in_=self.statusbar)
+
+        self.label_status = tk.Label(self.statusbar, text="{}'s turn".format(self.game.current_player), fg="black")
+        self.label_status.pack(side=tk.LEFT, in_=self.statusbar)
 
         self.statusbar.pack(expand=False, fill="x", side="bottom")

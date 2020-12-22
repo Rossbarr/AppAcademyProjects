@@ -6,7 +6,7 @@ Piece is a parent of all "piece-type" objects (e.g. pawn, queen, knight, etc.) a
 class Piece():
     def __init__(self, color, board, pos):
         """
-        When a piece is initialized, it has 3 attributes that it needs.
+        When a piece is initialized, it has 4 attributes.
             1. color
                 str: "white" or "black"
                 A piece's color is static, never changing.
@@ -14,25 +14,24 @@ class Piece():
                 (e.g. pawns, whether they're white or black, can only move in one direction.)
             2. board
                 object: Board class
-                Although it may be possible for a piece to not need the board it's attached to,
-                I think it's simpler if it does.
-                The reason is that the piece needs to ask the board where other pieces are so
-                it can change its movement options accordingly.
-                There are perhaps alternatives to doing this,
-                but this solution seemed like the simplest and best.
+                When developing possible moves, the piece must ask the board about its state
+                (where are other pieces, will I move into check, etc.)
             3. pos
                 array: length 2, containing integers
                 The piece knows about it's position so that it can develop its list of moves accordingly.
                 The obvious alternative here is to have the board tell the piece where it is,
-                the board already keeps track of all the pieces and their positions as well.
-                However, I'm not sure how much you're gaining with that optimization,
-                or if it would really even work in the first place.
-                Regardless, I could totally see it working.
-                Maybe I'll try it in the future.
+                There are advantages and disadvantages to both systems.
+            4. moved
+                bool
+                This is initialized as false and is set to true when the piece moves once.
+                The king, rook, and pawn lose out on some movement options after moving once.
+                This is the simplest way to check to see if they've ever moved.
+
         """
         self.color = color
         self.board = board
         self.pos = pos
+        self.moved = False
 
     def moves(self):
         """
@@ -105,4 +104,5 @@ class NullPiece(Piece):
     As I said, I didn't really give None a chance during my first go.
     """
     def __init__(self):
-        pass
+        self.symbol = ""
+        self.moved = True

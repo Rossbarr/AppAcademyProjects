@@ -56,12 +56,14 @@ class Board:
             opposite_color = "black"
         elif color == "black":
             opposite_color = "white"
+
         king_pos = self.find_king(color)
         pieces = self.find_pieces(opposite_color)
         for piece in pieces:
-            moves = piece.moves()
-            if king_pos in moves:
-                return True
+            if piece.symbol is not "K":
+                moves = piece.moves()
+                if king_pos in moves:
+                    return True
         return False
     
     def find_pieces(self, color):
@@ -75,7 +77,7 @@ class Board:
     def find_king(self, color):
         for i in range(8):
             for j in range(8):
-                if type(self.rows[i, j]) == type(King("go", "a", "way")) and self.rows[i, j].color == color:
+                if self.rows[i, j].symbol == "K" and self.rows[i, j].color == color:
                     return [i, j]
         raise Exception("King not found")
 
@@ -83,9 +85,41 @@ class Board:
         a, b = start_pos
         x, y = end_pos
 
-        self.rows[x, y] = self.rows[a, b]
-        self.rows[x, y].pos = [x, y]
-        self.rows[a, b] = self.nothing
+        piece = self.rows[a, b]
+        if piece.symbol == "K" and abs(b - y) == 2:
+            self.__castle(color, start_pos, end_pos)
+        else:
+            self.rows[x, y] = piece
+            piece.pos = [x, y]
+            piece.moved = True
+            self.rows[a, b] = self.nothing
+
+    def __castle(self, color, start_pos, end_pos):
+        a, b = start_pos
+        x, y = end_pos
+
+        piece = self.rows[a, b]
+        if y - b == -2:
+            rook = self.rows[a, 0]
+            self.rows[x, y] = piece
+            self.rows[x, y + 1] = rook
+            piece.pos = [x, y]
+            rook.pos = [x, y + 1]
+            piece.moved = True
+            rook.moved = True
+            self.rows[a, b] = self.nothing
+            self.rows[a, 0] = self.nothing
+        else:
+            rook = self.rows[a, 7]
+            self.rows[x, y] = piece
+            self.rows[x, y - 1] = rook
+            piece.pos = [x, y]
+            rook.pos = [x, y - 1]
+            piece.moved = True
+            rook.moved = True
+            self.rows[a, b] = self.nothing
+            self.rows[a, 7] = self.nothing
+
 
     def __fill_back_row(self):
         back_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]

@@ -22,21 +22,6 @@ class Pawn(Piece):
             result = []
         return result
 
-    def __at_start_row(self):
-        """
-        Checks if the pawn is on the start row.
-        """
-        start_row = 8
-        if self.color == "black":
-            start_row = 1
-        elif self.color == "white":
-            start_row = 6
-        else:
-            print("The pawn color is {}".format(self.color))
-            raise Exception("Pawn color is not white or black")
-        
-        return True if (self.pos[0] == start_row) else False
-
     def __forward_dir(self):
         """
         Sets forward direction.
@@ -52,6 +37,12 @@ class Pawn(Piece):
         return forward
 
     def __forward_steps(self):
+        """
+        Returns a list of forward moves.
+        This checks if there's anything blocking the pawn,
+        and if it's at the starting row,
+        and adjusts the possible moves accordingly.
+        """
         x, y = self.pos
         moves = []
         forward = self.forward
@@ -59,13 +50,16 @@ class Pawn(Piece):
         if self.board.empty([x + forward, y]):
             moves.append([x + forward, y])
             # The next line is intentionally nested
-            # If there's something immediately in front of the pawn, it is stuck
-            if self.__at_start_row() and self.board.empty([x + forward + forward, y]):
+            # as, if there's something immediately in front of the pawn, it is stuck anyway
+            if not self.moved and self.board.empty([x + forward + forward, y]):
                 moves.append([x + forward + forward, y])
 
         return moves
 
     def __side_attacks(self):
+        """
+        Returns a list of diagonal attacks the pawn can make
+        """
         x, y = self.pos
         forward = self.forward
         moves = []

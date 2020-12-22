@@ -16,43 +16,32 @@ class Display(tk.Frame):
     """
     def __init__(self, main, game, board):
         """
-        Tk objects like button, frame, etc. require a reference to the "thing" they're in.
-        This is usually called "master", but I called it main for the same reasons github does.
+        Arguments:
+            Tk objects like button, frame, etc. require a reference to the "thing" they're in.
+            This is usually called "master", but I called it main for the same reasons github does.
 
-        The display needs to know the game object it's apart of so it can reference methods when necessarily.
+            The display needs to know the game object it's apart of so it can reference methods when necessarily.
 
-        Additionally, display needs to know the board so that it can render it as it changes.
+            Additionally, display needs to know the board so that it can render it as it changes.
 
-        There are two attributes called selected_piece and highlighted which follow.
-            selected_piece is a tuple (think list but immutable) containing
-                1. the piece object which was last clicked.
-                2. it's position (a list)
-            At this point, you might be thinking that seems kinda ricidulous.
-            If I have one of those values, I can get the other:
-                Since I have the piece, and the piece contains an attribute for its position, I can get that
-                Since I have the position, I can ask the board if and what piece is there.
-            The reason it's currently left the way it is is because I'm lazy.
-            I was trying to decide if a piece should have a reference to its own position.
-            And while deciding that, I've left this as it was originally formed.
-            I'll "hopefully" optimize it eventually.
+        Attributes:
+            selected_piece is the piece object which was last clicked.
+            Once you select a piece, you decide where to move it.
 
             highlighted is a list of valid moves that the selected piece can make.
-            This is, I think, as effecient as it gets.
-            It's only generated if there's a selected piece,
-            otherwise it's empty.
-            If you have any ideas or suggestions, let me know.
+            If you click a non-highlighted square, the selected_piece is dropped.
 
-        icons assists in printing the images of the pieces to the screen.
+            icons assists in printing the images of the pieces to the screen.
             It's a dictionary of each piece to its appropriate image file.
             A white pawn, for example, will have it's own image. So will a black pawn.
-            draw_pieces() fills this dictionary in full the first time it's called.
+            draw_pieces() fills this dictionary the first time it's called.
             To understand icons better, go to the draw_pieces() comments.
         """
         self.main = main
         main.title("Chessboard") # This just changes the window title.
         self.game = game
         self.board = board
-        self.selected_piece = (self.board.nothing, None)
+        self.selected_piece = self.board.nothing
         self.highlighted = []
         self.icons = {}
 
@@ -69,12 +58,12 @@ class Display(tk.Frame):
         print("You clicked {}, {}".format(current_col, current_row))
         
         clicked_position = [current_col, current_row]
-        piece = self.selected_piece[0]
-        piece_position = self.selected_piece[1]
+        piece = self.selected_piece
+        piece_position = self.selected_piece.pos
         
         if piece is not self.board.nothing:
             self.move(piece_position, clicked_position)
-            self.selected_piece = (self.board.nothing, None)
+            self.selected_piece = self.board.nothing
             self.highlighted = []
             self.refresh()
             self.draw_pieces()
@@ -97,7 +86,7 @@ class Display(tk.Frame):
                 row_start = (y * 64)
                 column_end = column_start + 64
                 row_end = row_start + 64
-                if self.selected_piece[0] is not self.board.nothing and [x, y] == self.selected_piece[1]:
+                if self.selected_piece is not self.board.nothing and [x, y] == self.selected_piece.pos:
                     self.canvas.create_rectangle(row_start, column_start, row_end, column_end, 
                                                 outline="black", fill="orange", tags="square")
                 elif [x, y] in self.highlighted:
@@ -120,7 +109,7 @@ class Display(tk.Frame):
     def highlight(self, position):
         piece = self.board.rows[position[0], position[1]]
         if piece is not self.board.nothing and piece.color == self.game.current_player:
-            self.selected_piece = (piece, position)
+            self.selected_piece = piece
             self.highlighted = piece.valid_moves()
 
     def draw_pieces(self):
@@ -144,7 +133,7 @@ class Display(tk.Frame):
 
     def reset(self):
         self.game.reset()
-        self.selected_piece = (self.board.nothing, None)
+        self.selected_piece = self.board.nothing
         self.highlighted = []
         self.pieces = {}
         self.refresh()

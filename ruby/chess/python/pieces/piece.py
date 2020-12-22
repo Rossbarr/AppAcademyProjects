@@ -106,3 +106,4 @@ class NullPiece(Piece):
     def __init__(self):
         self.symbol = ""
         self.moved = True
+        self.pos = [8, 8]

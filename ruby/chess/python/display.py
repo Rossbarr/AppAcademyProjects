@@ -104,7 +104,13 @@ class Display(tk.Frame):
         self.canvas.tag_lower("square")
 
     def move(self, start_position, end_position):
-        self.game.move(start_position, end_position)
+        a, b = start_position
+        x = end_position[0]
+
+        if ((x == 0 or x == 7) and self.board.rows[a, b].symbol == "p"):
+            self.__promote_pawn(start_position, end_position)
+        else:
+            self.game.move(start_position, end_position)
 
     def highlight(self, position):
         piece = self.board.rows[position[0], position[1]]
@@ -161,3 +167,29 @@ class Display(tk.Frame):
         self.label_status.pack(side=tk.LEFT, in_=self.statusbar)
 
         self.statusbar.pack(expand=False, fill="x", side="bottom")
+
+    def __promote_pawn(self, start_position, end_position):
+        self.button_queen = tk.Button(self.statusbar, text="Queen", fg="black", 
+            command= lambda: self.game.move(start_position, end_position, "Q"))
+        self.button_queen.pack(side=tk.RIGHT, in_=self.statusbar)
+
+        self.button_rook = tk.Button(self.statusbar, text="Rook", fg="black", 
+            command= lambda: self.game.move(start_position, end_position, "R"))
+        self.button_rook.pack(side=tk.RIGHT, in_=self.statusbar)
+
+        self.button_bishop = tk.Button(self.statusbar, text="Biship", fg="black", 
+            command= lambda: self.game.move(start_position, end_position, "B"))
+        self.button_bishop.pack(side=tk.RIGHT, in_=self.statusbar)
+
+        self.button_knight = tk.Button(self.statusbar, text="Knight", fg="black", 
+            command= lambda: self.game.move(start_position, end_position, "N"))
+        self.button_knight.pack(side=tk.RIGHT, in_=self.statusbar)
+
+    def _destroy_buttons(self):
+        self.button_queen.destroy()
+        self.button_rook.destroy()
+        self.button_bishop.destroy()
+        self.button_knight.destroy()
+    
+        self.refresh()
+        self.draw_pieces()

@@ -76,7 +76,7 @@ class Piece():
         That is, a piece's position may not line up with the board's knowledge of that piece's position.
         """
         test_board = self.board.deepcopy()
-        test_board._execute_move(self.color, self.pos, end_pos)
+        test_board._execute_move(self.color, self.pos, end_pos, "Q")
         result = test_board.in_check(self.color)
         if result:
             print("{} moves into check".format(end_pos))

@@ -21,7 +21,7 @@ class Board:
         self.__fill_back_row()
         self.__fill_pawns_row()
 
-    def move(self, color, start_pos, end_pos):
+    def move(self, color, start_pos, end_pos, *promotion):
         a, b = start_pos
        
         if self.empty(start_pos):
@@ -33,7 +33,7 @@ class Board:
         elif end_pos not in self.rows[a, b].valid_moves():
             raise Exception("Moving into check")
 
-        self._execute_move(color, start_pos, end_pos)
+        self._execute_move(color, start_pos, end_pos, *promotion)
 
     def valid(self, pos):
         x, y = pos[0], pos[1]
@@ -82,7 +82,7 @@ class Board:
                     return [i, j]
         raise Exception("King not found")
 
-    def _execute_move(self, color, start_pos, end_pos):
+    def _execute_move(self, color, start_pos, end_pos, *promotion):
         a, b = start_pos
         x, y = end_pos
 
@@ -90,17 +90,15 @@ class Board:
         if piece.symbol == "K" and abs(b - y) == 2:
             self.__castle(color, start_pos, end_pos)
         elif (piece.symbol == "p" and 
+                (x == 0 or x == 7)):
+            self.__promote_pawn(color, start_pos, end_pos, *promotion)
+        elif (piece.symbol == "p" and
                 self.last_move[0].symbol == "p" and
                 abs(self.last_move[2][0] - self.last_move[1][0]) == 2 and
                 (a == 3 and color == "white" or
                 a == 4 and color == "black") and
                 abs(y - b) == 1):
-            self.rows[self.last_move[2][0], self.last_move[2][1]] = self.nothing
-            self.rows[x, y] = piece
-            piece.pos = [x, y]
-            piece.moved = True
-            self.rows[a, b] = self.nothing
-            self.last_move = (piece, start_pos, end_pos)
+            self.__en_passent(color, start_pos, end_pos)
         else:
             self.rows[x, y] = piece
             piece.pos = [x, y]
@@ -135,6 +133,40 @@ class Board:
             self.rows[a, b] = self.nothing
             self.rows[a, 7] = self.nothing
             self.last_move = (piece, start_pos, end_pos)
+
+    def __en_passent(self, color, start_pos, end_pos):
+        a, b = start_pos
+        x, y = end_pos
+
+        piece = self.rows[a, b]
+
+        self.rows[self.last_move[2][0], self.last_move[2][1]] = self.nothing
+        self.rows[x, y] = piece
+        piece.pos = [x, y]
+        piece.moved = True
+        self.rows[a, b] = self.nothing
+        self.last_move = (piece, start_pos, end_pos)
+
+    def __promote_pawn(self, color, start_pos, end_pos, promotion):
+        a, b = start_pos
+        x, y = end_pos
+
+        piece = self.rows[a, b]
+
+        if promotion == "Q":
+            promotion = Queen
+        elif promotion == "R":
+            promotion = Rook
+        elif promotion == "B":
+            promotion = Bishop
+        else:
+            promotion = Knight
+
+        self.rows[x, y] = promotion(color, self, end_pos)
+        piece.pos = [8, 8]
+        piece.moved = True
+        self.rows[a, b] = self.nothing
+        self.last_move = (piece, start_pos, end_pos)        
 
     def __fill_back_row(self):
         back_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]

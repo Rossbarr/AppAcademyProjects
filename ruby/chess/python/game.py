@@ -8,9 +8,11 @@ class Game:
         self.__set_up_game()
         self.__set_up_display()
 
-    def move(self, start_pos, end_pos):
+    def move(self, start_pos, end_pos, *promotion):
         try:
-            self.board.move(self.current_player, start_pos, end_pos)
+            self.board.move(self.current_player, start_pos, end_pos, *promotion)
+            if promotion is not ():
+                self.display._destroy_buttons()
         except Exception as err:
             print("Exception occured: {}".format(err))
             return

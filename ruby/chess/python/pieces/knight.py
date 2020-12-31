@@ -1,7 +1,21 @@
 from piece import Piece
 
 class Knight(Piece):
+    """
+    Knight inherits from Piece.
+    """
+
     def __init__(self, color, board, pos):
+        """
+        When a Knight is initialized, it needs 6 attributes.
+        4 of them are defined in the piece parent class,
+        and they are shared among all pieces.
+
+        Symbol is another common attribute among pieces.
+        It's a quick way for something to get the type of piece it's referencing.
+
+        _move_diffs defines the movement options for the Knight.
+        """
         super().__init__(color, board, pos)
         self.symbol = "N"
         self._move_diffs = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]

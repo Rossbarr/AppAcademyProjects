@@ -1,7 +1,21 @@
 from piece import Piece
 
 class Pawn(Piece):
+    """
+    Pawn inherits from Piece.
+    """
+
     def __init__(self, color, board, pos):
+        """
+        When a Pawn is initialized, it needs 6 attributes.
+        4 of them are defined in the piece parent class,
+        and they are shared among all pieces.
+
+        Symbol is another common attribute among pieces.
+        It's a quick way for something to get the type of piece it's referencing.
+
+        forward is the forward direction the Pawn moves, see __forward_dir().
+        """
         super().__init__(color, board, pos)
         self.symbol = "p"
         self.forward = self.__forward_dir()
@@ -9,17 +23,13 @@ class Pawn(Piece):
     def moves(self):
         """
         Returns a list of the possible forward movements and diagonal attacks
+        given the current positioning of the Pawn and nearby pieces.
         """
         forwards = self.__forward_steps()
         diags = self.__side_attacks()
-        if len(forwards) > 0 and len(diags) > 0:
-            result = self.__forward_steps() + self.__side_attacks()
-        elif len(forwards) > 0:
-            result = forwards
-        elif len(diags) > 0:
-            result = diags
-        else:
-            result = []
+        
+        result = forwards + diags
+        
         return result
 
     def __forward_dir(self):
@@ -31,7 +41,7 @@ class Pawn(Piece):
         elif self.color == "white":
             forward = -1
         else:
-            print("The pawn color is {}".format(self.color))
+            print("The Pawn color is {}".format(self.color))
             raise Exception("Pawn color is not white or black")
 
         return forward
@@ -39,18 +49,18 @@ class Pawn(Piece):
     def __forward_steps(self):
         """
         Returns a list of forward moves.
-        This checks if there's anything blocking the pawn,
+        This checks if there's anything blocking the Pawn,
         and if it's at the starting row,
         and adjusts the possible moves accordingly.
         """
         x, y = self.pos
         moves = []
         forward = self.forward
-        # Check if there's something in front of the pawn
+        # Check if there's something in front of the Pawn
         if self.board.empty([x + forward, y]):
             moves.append([x + forward, y])
             # The next line is intentionally nested
-            # as, if there's something immediately in front of the pawn, it is stuck anyway
+            # as, if there's something immediately in front of the Pawn, it is stuck anyway
             if not self.moved and self.board.empty([x + forward + forward, y]):
                 moves.append([x + forward + forward, y])
 
@@ -58,7 +68,7 @@ class Pawn(Piece):
 
     def __side_attacks(self):
         """
-        Returns a list of diagonal attacks the pawn can make
+        Returns a list of diagonal attacks the Pawn can make
         """
         x, y = self.pos
         forward = self.forward

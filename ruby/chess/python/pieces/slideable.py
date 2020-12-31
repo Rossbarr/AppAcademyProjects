@@ -1,8 +1,7 @@
 """
 This module is to be imported into pieces which "slide."
-In this case, it will be imported into queen, rook, and bishop.
+In this case, it will be imported into Queen, Rook, and Bishop.
 
-The king isn't a slideable piece because it is limited to moving 1 square.
 Slideable pieces can move indefinitly along an empty line.
 
 The pieces themselves dictate whether they can move orthogonoally, diagonally, or both.
@@ -15,7 +14,7 @@ DIAGONAL_DIRS = [[1, 1], [-1, -1], [1, -1], [-1, 1]]
 def moves(self):
     """
     This method generates an array of possible movement locations.
-    The possible directions a piece can go is retrieved from the _move_dirs attribute,
+    The possible directions a piece can go is retrieved from the _move_dirs attribute
     which, depending on the piece, contains ORTHOGONAL_DIRS and/or DIAGONAL_DIRS.
 
     It then steps along this direction until it is somehow blocked,

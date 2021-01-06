@@ -18,7 +18,13 @@ describe "Player" do
 
     describe "#discard" do
         it "expects user input" do
-            expect(player.discard).to receive(:gets).with("1 2 4")
+            allow(player.discard).to receive(:gets).with("1 2 4")
+        end
+    end
+
+    describe "#input" do
+        it "expects user input" do
+            allow(player.input).to receive(:gets).with("call")
         end
     end
 end

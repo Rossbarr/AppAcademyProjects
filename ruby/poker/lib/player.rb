@@ -9,6 +9,10 @@ class Player
     end
 
     def discard
-        cards = gets.chomp
+        return gets.chomp.split(" ").each { |c| c.to_i }
+    end
+
+    def input
+        gets.chomp
     end
 end

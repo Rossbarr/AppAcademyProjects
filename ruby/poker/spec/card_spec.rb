@@ -36,4 +36,13 @@ describe "Card" do
             expect(card.suit).to eq("H")
         end
     end
+
+    describe "#index" do
+        it "returns the card's index" do
+            card = Card.new("KH")
+            expect(card.index).to eq(11)
+            card = Card.new("2H")
+            expect(card.index).to eq(0)
+        end
+    end
 end

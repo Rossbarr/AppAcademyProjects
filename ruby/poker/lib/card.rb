@@ -22,4 +22,8 @@ class Card
     def suit
         return @value[1]
     end
+
+    def index
+        return RANKS.index(@value[0])
+    end
 end

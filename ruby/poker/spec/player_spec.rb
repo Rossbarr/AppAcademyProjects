@@ -2,8 +2,9 @@ require "rspec"
 require "player"
 
 describe "Player" do
-    subject(:player) { Player.new }
     let(:hand) { Hand.new }
+    let(:deck) { Deck.new }
+    subject(:player) { Player.new(deck) }
 
     describe "#init" do
         it "creates a hand variable" do
@@ -17,7 +18,7 @@ describe "Player" do
 
     describe "#discard" do
         it "expects user input" do
-            expect(player.input).to receive(:gets).with("1 2 4")
+            expect(player.discard).to receive(:gets).with("1 2 4")
         end
     end
 end

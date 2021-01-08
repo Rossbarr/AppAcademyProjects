@@ -59,18 +59,14 @@ puts largest_contiguous_subsum(list) # => -1 (from [-1])
 
 def better_lcs(list)
   sum = list[0]
+  curr = 0
   
-  i = j = 0
-  while i < list.length and j < list.length
-    curr = list[i..j].inject(0){|sum, x| sum + x}
-    if sum < curr
-      sum = curr
-    end
-    j += 1
-    if j >= list.length
-      i += 1
-      j = i
-    end
+  i = 0
+  while i < list.length
+    curr = 0 if curr < 0
+    curr += list[i]
+    sum = curr if sum < curr
+    i += 1
   end
 
   return sum

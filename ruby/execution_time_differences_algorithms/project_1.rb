@@ -25,7 +25,7 @@ end
 
 puts better_my_min(list)
 
-def largest_contiguous_sum(array)
+def largest_contiguous_subsum(array)
   sub_arrays = []
   array.index do |i|
     array.index do |j|
@@ -33,12 +33,22 @@ def largest_contiguous_sum(array)
     end
   end
 
-  max = sub_arrays[0].sum
+  max = sub_arrays[0].inject(0){|sum, x| sum + x }
   sub_arrays.each do |array|
-    if max < array.sum
-      max = array.sum
+    sum = array.inject(0){|sum, x| sum + x}
+    if max < sum
+      max = sum
     end
   end
 
   return max
 end
+
+list = [5, 3, -7]
+puts largest_contiguous_subsum(list) # => 8
+
+list = [2, 3, -6, 7, -6, 7]
+puts largest_contiguous_subsum(list) # => 8 (from [7, -6, 7])
+
+list = [-5, -1, -3]
+puts largest_contiguous_subsum(list) # => -1 (from [-1])

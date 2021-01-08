@@ -27,10 +27,14 @@ puts better_my_min(list)
 
 def largest_contiguous_subsum(array)
   sub_arrays = []
-  array.index do |i|
-    array.index do |j|
+  i = j = 0
+  while i < array.length
+    while j < array.length
       sub_arrays << array[i..j]
+      j += 1
     end
+    i += 1
+    j = i
   end
 
   max = sub_arrays[0].inject(0){|sum, x| sum + x }
@@ -52,3 +56,26 @@ puts largest_contiguous_subsum(list) # => 8 (from [7, -6, 7])
 
 list = [-5, -1, -3]
 puts largest_contiguous_subsum(list) # => -1 (from [-1])
+
+def better_lcs(list)
+  sum = list[0]
+  
+  i = j = 0
+  while i < list.length and j < list.length
+    curr = list[i..j].inject(0){|sum, x| sum + x}
+    if sum < curr
+      sum = curr
+    end
+    j += 1
+    if j >= list.length
+      i += 1
+      j = i
+    end
+  end
+
+  return sum
+end
+
+list = [2, 3, -6, 7, -6, 7]
+puts better_lcs(list) # => 8 (from [7, -6, 7])
+

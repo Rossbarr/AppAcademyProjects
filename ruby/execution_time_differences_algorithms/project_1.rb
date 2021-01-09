@@ -1,3 +1,5 @@
+require "benchmark"
+
 def my_min(array)
   result = 0
   array.each do |num1|
@@ -10,9 +12,6 @@ def my_min(array)
   return result
 end
 
-list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
-puts my_min(list)  # =>  -5
-
 def better_my_min(array)
   min = array[0]
   array.each do |number|
@@ -22,8 +21,6 @@ def better_my_min(array)
   end
   return min
 end
-
-puts better_my_min(list)
 
 def largest_contiguous_subsum(array)
   sub_arrays = []
@@ -48,15 +45,6 @@ def largest_contiguous_subsum(array)
   return max
 end
 
-list = [5, 3, -7]
-puts largest_contiguous_subsum(list) # => 8
-
-list = [2, 3, -6, 7, -6, 7]
-puts largest_contiguous_subsum(list) # => 8 (from [7, -6, 7])
-
-list = [-5, -1, -3]
-puts largest_contiguous_subsum(list) # => -1 (from [-1])
-
 def better_lcs(list)
   sum = list[0]
   curr = 0
@@ -72,6 +60,16 @@ def better_lcs(list)
   return sum
 end
 
-list = [2, 3, -6, 7, -6, 7]
-puts better_lcs(list) # => 8 (from [7, -6, 7])
+list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
+
+n = 10000
+Benchmark.bm do |x|
+  x.report("my_min:   ") { my_min(list) }
+
+  x.report("b_my_min: ") { better_my_min(list) }
+
+  x.report("lcs:      ") { largest_contiguous_subsum(list) }
+
+  x.report("b_lcs:    ") { better_lcs(list) }
+end
 

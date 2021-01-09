@@ -21,32 +21,22 @@ class MinMaxStack
 
   def initialize
     @stack = []
-    @max = nil
-    @min = nil
   end
 
   def push(item)
-    @stack.push(item)
-
-    if @max == nil
-      @max = item
-    elsif item >= @max
-      @max = item
-    end
-
-    if @min == nil
-      @min = item
-    elsif item <= @min
-      @min = item
-    end
+    @stack.push({
+      max: new_max(item),
+      min: new_min(item),
+      value: item
+    })
   end
 
   def pop
-    @stack.pop
+    @stack.pop unless empty?
   end
 
   def peek
-    @stack.last()
+    @stack.last[:value] unless empty?
   end
 
   def size
@@ -54,36 +44,68 @@ class MinMaxStack
   end
 
   def empty?
-    @stack.first == nil
+    @stack.empty?
+  end
+
+  def max
+    @stack.last[:max] unless empty?
+  end
+
+  def min
+    @stack.last[:min] unless empty?
+  end
+
+  private
+
+  def new_max(item)
+    empty? ? item : [max, item].max
+  end
+
+  def new_min(item)
+    empty? ? item : [min, item].max
   end
 end
 
-class StackQueue
+class MinMaxStackQueue
   def initialize
-    @stack1 = MyStack.new()
-    @stack2 = Mystack.new()
-    @topstack = @stack1
+    @instack = MinMaxStack.new()
+    @outstack = MinMaxstack.new()
   end
 
   def enqueue(item)
-    @topstack.push(item)
-    if @topstack == @stack1
-      @topstack = @stack2
-    else
-      @topstack = @stack1
-    end
-    dequeue
+    @instack.push(item)
   end
 
   def dequeue
-    @topstack.pop(item)
+    queueify if @outstack.empty?
+    @outstack.pop(item)
   end
 
   def size
-    return @stack1 + @stack2
+    return @instack.size + @outstack.size
   end
 
   def empty?
-    return @stack1 + @stack2 == 0
+    return @instack.empty? && @outstack.empty?
+  end
+
+  def max
+    maxes = []
+    maxes << @instack.max unless @instack.empty?
+    maxes << @outstack.max unless @instack.empty?
+    return maxes.max
+  end
+
+  def min
+    mins = []
+    mins << @instack.min unless @instack.empty?
+    mins << @outstack.min unless @outstack.empty?
+    reutrn mins.min
+  end
+
+  private
+
+  def queueify
+    @outstack.push(@instack.pop) until @instack.empty?
   end
 end

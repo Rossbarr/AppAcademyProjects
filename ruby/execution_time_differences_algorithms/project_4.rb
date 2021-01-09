@@ -16,38 +16,29 @@ puts windowed_max_range([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
 puts windowed_max_range([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
 puts windowed_max_range([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
 
-class MyQueue
-  def initialize
-    @queue = []
-  end
+class MinMaxStack
+  attr_reader(:max, :min)
 
-  def enqueue(item)
-    @queue << item
-  end
-
-  def dequeue
-    @queue.shift
-  end
-
-  def peek
-    @queue[0]
-  end
-  
-  def size
-    @queue.length
-  end
-
-  def empty?
-    @queue.length == 0
-end
-
-class MyStack
   def initialize
     @stack = []
+    @max = nil
+    @min = nil
   end
 
   def push(item)
     @stack.push(item)
+
+    if @max == nil
+      @max = item
+    elsif item >= @max
+      @max = item
+    end
+
+    if @min == nil
+      @min = item
+    elsif item <= @min
+      @min = item
+    end
   end
 
   def pop

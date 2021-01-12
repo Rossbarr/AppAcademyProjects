@@ -24,6 +24,8 @@ end
 class LinkedList
   include Enumerable
 
+  attr_reader :head, :tail
+
   def initialize
     @head = Node.new(:head)
     @tail = Node.new(:tail)
@@ -71,6 +73,7 @@ class LinkedList
     new_node.prev = last
     new_node.next = @tail
     @tail.prev = new_node
+    return new_node
   end
 
   def update(key, val)

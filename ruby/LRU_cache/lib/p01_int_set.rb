@@ -10,8 +10,11 @@ class MaxIntSet
   end
 
   def insert(num)
-    @store[num] = true if is_valid?(num)
-    return true
+    if is_valid?(num)
+      @store[num] = true     
+      return true
+    end
+    return false
   end
 
   def remove(num)
@@ -25,7 +28,7 @@ class MaxIntSet
   private
 
   def is_valid?(num)
-    raise ArgumentError.new("Out of bounds") if num >= @max or num < 0
+    raise ArgumentError.new("Out of bounds") unless 0 <= num and num < @max
     num.is_a?(Integer)
   end
 

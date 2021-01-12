@@ -4,11 +4,11 @@ end
 
 class Array
   def hash
-    placeholder_string = ""
-    self.each_with_index do |num, i|
-      placeholder_string += num.to_s + i.to_s
+    placeholder_int = 0
+    self.each_with_index do |el, i|
+      placeholder_int += el.hash * i ^ 118112
     end
-    return placeholder_string.to_i.hash
+    return placeholder_int.hash
   end
 end
 
@@ -17,7 +17,7 @@ class String
     alphabet = ("a".."z").to_a
     placeholder_int = 0
     self.each_char.with_index do |char, i|
-      placeholder_int += alphabet.index(char.downcase) * i
+      placeholder_int += alphabet.index(char.downcase) * i ^ 118112
     end
     return placeholder_int.hash
   end
@@ -30,7 +30,7 @@ class Hash
     placeholder_int = 0
     array = self.to_a.sort!
     array.each do |arr|
-      placeholder_int += arr.hash
+      placeholder_int += arr.hash ^ 118112
     end
     placeholder_int.hash
   end

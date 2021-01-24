@@ -1,0 +1,17 @@
+.col {
+    float: left;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.col:last-of-type {
+    padding: 0;
+}
+
+.col-1-5 {
+    width: 20%;
+}
+
+.col-4-5 {
+    width: 80%;
+}

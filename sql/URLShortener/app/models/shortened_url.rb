@@ -9,6 +9,18 @@ class ShortenedUrl < ApplicationRecord
         primary_key: :id
     )
 
+    has_many(:visits,
+        class_name: 'Visit',
+        foreign_key: :shortened_url_id,
+        primary_key: :id
+    )
+
+    has_many(:visitors,
+        Proc.new { distinct },
+        through: :visits,
+        source: :visitor
+    )
+
     def self.random_code
         found = false
         until found
@@ -23,5 +35,17 @@ class ShortenedUrl < ApplicationRecord
     def self.shorten_url(long_url, user)
         short_url = ShortenedUrl.random_code
         return ShortenedUrl.create({ long_url: long_url, short_url: short_url, user_id: user.id })
+    end
+
+    def num_clicks
+        self.visits.select(:user_id).count
+    end
+
+    def num_unique_clicks
+        self.visits.select(:user_id).distinct.count
+    end
+
+    def num_recent_unique_clicks
+        self.visits.select(:user_id).distinct.where({ updated_at: (10.minutes.ago)..Time.now }).count
     end
 end

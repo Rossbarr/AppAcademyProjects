@@ -13,9 +13,9 @@ class TagTopic < ApplicationRecord
 
     def popular_links
         links = {}
-        urls = self.urls#.includes(:visits)
+        urls = self.urls.includes(:visits)
         urls.each do |url|
-            links[url.short_url] = url.num_clicks
+            links[url.short_url] = url.visits.count
         end
         links
     end

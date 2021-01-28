@@ -17,6 +17,17 @@ class TagTopic < ApplicationRecord
         urls.each do |url|
             links[url.short_url] = url.visits.count
         end
-        links
+        links.sort_by{|url, count| count}.reverse
+
+        # urls = self
+        # .urls
+        # .select("shortened_urls.short_url AS url, COUNT(shortened_urls.user_id) AS num_clicks")
+        # .join(:visits)
+        # .group("shortened_urls.short_url")
+
+        # urls.map do |url|
+        #     [url.url, url.num_clicks]
+        # end
+
     end
 end

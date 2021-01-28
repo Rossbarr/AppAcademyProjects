@@ -18,4 +18,8 @@ class User < ApplicationRecord
         through: :visits,
         source: :visited_url
     )
+
+    def recently_submitted_urls
+        self.submitted_urls.where({ updated_at: (1.minutes.ago)..Time.now }).count
+    end
 end

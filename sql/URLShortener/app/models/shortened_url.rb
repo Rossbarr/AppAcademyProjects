@@ -3,6 +3,14 @@ class ShortenedUrl < ApplicationRecord
     validates(:short_url,   { presence: true, uniqueness: true })
     validates(:user_id,     { presence: true })
 
+    validate :no_spamming
+
+    def no_spamming
+        if self.submitter.recently_submitted_urls > 5
+            errors.add(:recently_submitted_urls, "can't be greater than 5 in one minute")
+        end
+    end
+
     belongs_to(:submitter,
         class_name: 'User',
         foreign_key: :user_id,

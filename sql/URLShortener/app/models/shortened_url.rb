@@ -3,11 +3,17 @@ class ShortenedUrl < ApplicationRecord
     validates(:short_url,   { presence: true, uniqueness: true })
     validates(:user_id,     { presence: true })
 
-    validate :no_spamming
+    validate(:no_spamming, :nonpremium_max)
 
     def no_spamming
         if self.submitter.recently_submitted_urls > 5
-            errors.add(:recently_submitted_urls, "can't be greater than 5 in one minute")
+            errors.add(:submitter, "can't submit more than 5 urls in one minute")
+        end
+    end
+
+    def nonpremium_max
+        if self.submitter.premium == false and self.submitter.submitted_urls.count > 5
+            errors.add(:submitter, "must have premium to submit more than 5 urls")
         end
     end
 

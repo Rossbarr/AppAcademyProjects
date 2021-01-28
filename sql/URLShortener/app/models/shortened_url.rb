@@ -21,6 +21,17 @@ class ShortenedUrl < ApplicationRecord
         source: :visitor
     )
 
+    has_many(:taggings,
+        class_name: 'Tagging',
+        foreign_key: :shortened_url_id,
+        primary_key: :id
+    )
+
+    has_many(:topics,
+        through: :taggings,
+        source: :tag_topic
+    )
+
     def self.random_code
         found = false
         until found

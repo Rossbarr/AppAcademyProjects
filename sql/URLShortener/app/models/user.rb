@@ -4,13 +4,15 @@ class User < ApplicationRecord
     has_many(:submitted_urls,
         class_name: 'ShortenedUrl',
         foreign_key: :user_id,
-        primary_key: :id
+        primary_key: :id,
+        dependent: :destroy
     )
 
     has_many(:visits,
         class_name: 'Visit',
         foreign_key: :user_id,
-        primary_key: :id
+        primary_key: :id,
+        dependent: :destroy
     )
 
     has_many(:visited_urls,

@@ -20,13 +20,14 @@ class ShortenedUrl < ApplicationRecord
     belongs_to(:submitter,
         class_name: 'User',
         foreign_key: :user_id,
-        primary_key: :id
+        primary_key: :id,
     )
 
     has_many(:visits,
         class_name: 'Visit',
         foreign_key: :shortened_url_id,
-        primary_key: :id
+        primary_key: :id,
+        dependent: :destroy
     )
 
     has_many(:visitors,
@@ -38,7 +39,8 @@ class ShortenedUrl < ApplicationRecord
     has_many(:taggings,
         class_name: 'Tagging',
         foreign_key: :shortened_url_id,
-        primary_key: :id
+        primary_key: :id,
+        dependent: :destroy
     )
 
     has_many(:topics,
@@ -66,8 +68,12 @@ class ShortenedUrl < ApplicationRecord
         return ShortenedUrl.create({ long_url: long_url, short_url: short_url, user_id: user.id })
     end
 
+    def self.prune(n = 10)
+        ShortenedUrl.where('updated_at < ?', n.minutes.ago).each(&:destroy)
+    end
+
     def num_clicks
-        self.visits.select(:user_id).count
+        self.visits.select(:user_id).count.destroy
     end
 
     def num_unique_clicks

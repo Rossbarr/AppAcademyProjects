@@ -10,4 +10,8 @@ class Tagging < ApplicationRecord
         foreign_key: :shortened_url_id,
         primary_key: :id
     )
+
+    def self.link_tag(shortened_url, tag_topic)
+        Tagging.create(shortened_url_id: shortened_url.id, tag_topic_id: tag_topic.id)
+    end
 end

@@ -32,6 +32,10 @@ class ShortenedUrl < ApplicationRecord
         source: :tag_topic
     )
 
+    def tags
+        self.topics
+    end
+
     def self.random_code
         found = false
         until found

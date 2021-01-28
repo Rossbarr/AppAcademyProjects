@@ -9,4 +9,12 @@ class TagTopic < ApplicationRecord
         through: :taggings,
         source: :url
     )
+
+    def popular_links
+        links = []
+        urls = self.urls
+        links = urls.map { |url| [url.short_url, url.num_clicks] }.sort_by(&:last).reverse
+
+        links
+    end
 end

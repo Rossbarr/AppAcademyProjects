@@ -73,7 +73,7 @@ class ShortenedUrl < ApplicationRecord
     end
 
     def num_clicks
-        self.visits.select(:user_id).count.destroy
+        self.visits.select(:user_id).count
     end
 
     def num_unique_clicks

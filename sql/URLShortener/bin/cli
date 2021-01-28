@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require 'launchy'
+
+def cli
+    puts "What is your email?"
+    email = gets.chomp
+    user = User.where("email = ?", email).find(1)
+
+    puts "Are you using a shorturl or creating one?"
+    puts "Please enter either 'use' or 'create'"
+    action = gets.chomp
+
+    if action == 'use'
+        use_shorturl(user)
+    elsif action == 'create'
+        create_shorturl(user)
+    end
+end
+
+def use_shorturl(user)
+    puts "Okay, please enter the url you'd like to use"
+    short_url_string = gets.chomp
+    short_url_object = ShortenedUrl.where("short_url = ?", short_url_string).find(1)
+    Visit.record_visit!(user, short_url_object)
+    p short_url_object.long_url
+end
+
+def create_shorturl(user)
+    puts "Okay, please enter the url you'd like to shorten"
+    long_url = gets.chomp
+    short_url_object = ShortenedUrl.shorten_url(long_url, user)
+    puts "Here's your shortened URL!"
+    puts short_url_object.short_url
+end
+
+cli

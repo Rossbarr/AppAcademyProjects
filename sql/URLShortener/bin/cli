@@ -21,9 +21,12 @@ end
 def use_shorturl(user)
     puts "Okay, please enter the url you'd like to use"
     short_url_string = gets.chomp
-    short_url_object = ShortenedUrl.where("short_url = ?", short_url_string).find(1)
+    short_url_object = ShortenedUrl.where("short_url = ?", short_url_string).first
     Visit.record_visit!(user, short_url_object)
+    puts "Here is your link!"
+    p
     p short_url_object.long_url
+    p
 end
 
 def create_shorturl(user)

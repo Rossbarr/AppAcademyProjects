@@ -60,7 +60,24 @@ class SQLObject
   end
 
   def self.find(id)
-    # ...
+    result_array = DBConnection.execute(<<-SQL, id)
+      SELECT
+        #{self.table_name}.*
+      FROM
+        #{self.table_name}
+      WHERE
+        #{self.table_name}.id = ?
+      LIMIT
+        1
+    SQL
+
+    result_hash = result_array[0]
+
+    if result_hash
+      object = self.new(result_hash)
+    else
+      nil
+    end
   end
 
   def initialize(params = {})

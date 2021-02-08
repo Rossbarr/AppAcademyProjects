@@ -8,3 +8,10 @@
 
 User.create(username: "Barrett")
 User.create(username: "Peter")
+
+Artwork.create(artist_id: 1, title: "Game Winning Penta", image_url: "https://www.youtube.com/watch?v=rqde_UQQqq8")
+Artwork.create(artist_id: 1, title: "Getting a Quadra after my Team Loses a Fight", image_url: "https://www.youtube.com/watch?v=rLnI8bEARiM")
+Artwork.create(artist_id: 1, title: "A Not Fed Laning Phase Quadra", image_url: "https://www.youtube.com/watch?v=rSp78_Ldaic")
+
+ArtworkShare.create(artwork_id: 1, viewer_id: 2)
+ArtworkShare.create(artwork_id: 2, viewer_id: 2)

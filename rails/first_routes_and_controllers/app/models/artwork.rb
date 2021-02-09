@@ -5,12 +5,13 @@ class Artwork < ApplicationRecord
 
     belongs_to(:artist,
         class_name: "User",
-        foreign_key: :artist_id,
+        foreign_key: :artist_id
     )
 
     has_many(:shares,
         class_name: "ArtworkShare",
-        foreign_key: :artwork_id
+        foreign_key: :artwork_id,
+        dependent: :destroy
     )
 
     has_many(:shared_viewers,

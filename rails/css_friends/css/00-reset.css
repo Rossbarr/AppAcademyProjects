@@ -11,6 +11,7 @@ span, article, footer, time, small {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    box-sizing: inherit;
 }
 
 ul {
@@ -18,7 +19,9 @@ ul {
 }
 
 img {
-    
+    display: block;
+    height: auto;
+    size: 100%;
 }
 
 input[type="password"],
@@ -27,10 +30,10 @@ input[type="text"],
 input[type="submit"],
 textarea,
 button {
-
+    cursor: pointer;
 }
 
 button,
 input[type="submit"] {
-
+    cursor: pointer;
 }

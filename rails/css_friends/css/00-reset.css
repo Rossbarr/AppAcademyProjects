@@ -8,10 +8,15 @@ span, article, footer, time, small {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
+    outline: 0;
+
     font: inherit;
-    vertical-align: baseline;
+    color: inherit;
+    text-align: inherit;
+    text-decoration: inherit;
+    vertical-align: inherit;
     box-sizing: inherit;
+    background: transparent;
 }
 
 ul {
@@ -20,8 +25,8 @@ ul {
 
 img {
     display: block;
+    width: 100%;
     height: auto;
-    size: 100%;
 }
 
 input[type="password"],
@@ -30,10 +35,17 @@ input[type="text"],
 input[type="submit"],
 textarea,
 button {
-    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 button,
 input[type="submit"] {
     cursor: pointer;
+}
+
+.cf::after {
+    content: "";
+    display: block;
+    clear: both;
 }

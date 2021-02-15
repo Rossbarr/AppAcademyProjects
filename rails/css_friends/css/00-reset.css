@@ -39,8 +39,7 @@ button {
     -moz-appearance: none;
 }
 
-button,
-input[type="submit"] {
+button, input[type="submit"] {
     cursor: pointer;
 }
 

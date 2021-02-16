@@ -15,3 +15,6 @@ Artwork.create(id: 3, artist_id: 1, title: "A Not Fed Laning Phase Quadra", imag
 
 ArtworkShare.create(id: 1, artwork_id: 1, viewer_id: 2)
 ArtworkShare.create(id: 2, artwork_id: 2, viewer_id: 2)
+
+Comment.create(commenter_id: 2, artwork_id: 1, body: "Wow, this is really cool!")
+Comment.create(commenter_id: 2, artwork_id: 2, body: "This one isn't as cool.")

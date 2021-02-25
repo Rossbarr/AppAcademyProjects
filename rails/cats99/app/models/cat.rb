@@ -1,6 +1,8 @@
 class Cat < ApplicationRecord
   include ActionView::Helpers::DateHelper
   
+  COLORS = ["white", "silver", "grey", "black", "yellow", "orange", "red", "brown"]
+
   validates(:name, presence: true)
   validates(:sex, presence: true)
   validates(:color, presence: true)

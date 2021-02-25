@@ -1,29 +1,3 @@
 <h1>Create a cat!</h1>
 
-<form action="<%= cats_url %>" method="post">
-    <label for="name">Name</label>
-    <input  id="name" type="text" name="cat[name]">
-
-    <label for="birthday">Birthday</label>
-    <input  id="birthday" type="date" name="cat[birth_date]">
-
-    <label for="color">Color</label>
-    <input  id="color" type="text" name="cat[color]">
-
-    <select name="cat[sex]">
-        <option disabled selected>
-            Gender
-        </option>
-        <option value="M">
-            Male
-        </option>
-        <option value="F">
-            Female
-        </option>
-    </select>
-
-    <label for="description">Description</label>
-    <input  id="description" type="text" name="cat[description]">
-
-    <input type="submit" value="Create cat">
-</form>
+<%= render('form', cat: @cat, action: :new) %>

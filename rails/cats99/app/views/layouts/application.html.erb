@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cats99</title>
+    <title>99Cats</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%# <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %> %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        padding: 4px;
+        border-collapse: collapse;
+      }
+    </style>
   </head>
 
   <body>
+    <h2><a href="<%= cats_url %>">HOME</a></h2>
+
     <%= yield %>
   </body>
 </html>

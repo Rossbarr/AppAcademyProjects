@@ -5,21 +5,6 @@ class CatsController < ApplicationController
     render(:index)
   end
 
-  def show
-    @cat = Cat.find_by(id: params[:id])
-
-    if @cat
-      render(:show)
-    else
-      redirect_to(cats_url)
-    end
-  end
-
-  def new
-    @cat = Cat.new
-    render(:new)
-  end
-
   def create
     @cat = Cat.new(cat_params)
 
@@ -30,9 +15,24 @@ class CatsController < ApplicationController
     end
   end
 
+  def new
+    @cat = Cat.new
+    render(:new)
+  end
+
   def edit
     @cat = Cat.find_by(id: params[:id])
     render(:edit)
+  end
+
+  def show
+    @cat = Cat.find_by(id: params[:id])
+
+    if @cat
+      render(:show)
+    else
+      redirect_to(cats_url)
+    end
   end
 
   def update
@@ -42,6 +42,16 @@ class CatsController < ApplicationController
       redirect_to(cat_url(@cat))
     else
       render(:edit)
+    end
+  end
+
+  def destroy
+    @cat = Cat.find_by(id: params[:id])
+
+    if @cat.destroy
+      redirect_to(cats_url)
+    else
+      render(cat_url(@cat))
     end
   end
 

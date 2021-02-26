@@ -5,7 +5,7 @@ class Cat < ApplicationRecord
 
   validates(:name, presence: true)
   validates(:sex, presence: true)
-  validates(:color, presence: true)
+  validates(:color, presence: true, inclusion: COLORS)
   validates(:birth_date, presence: true)
 
   def age

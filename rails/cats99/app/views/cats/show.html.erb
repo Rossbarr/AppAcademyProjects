@@ -15,10 +15,33 @@
 
 <p><%= @cat.description %></p>
 
+<h2>
+    Rental Requests
+</h2>
+
+<table>
+    <tr>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+    </tr>
+    <% @cat.requests.each do |request| %>
+        <tr>
+            <th><%= request.start_date %></th>
+            <th><%= request.end_date %></th>
+            <th><%= request.status %></th>
+        </tr>
+    <% end %>
+</table>
+
+<h3>
+    <a href="<%= new_cat_cat_rental_request_url(@cat) %>">Request rental</a>
+</h3>
+
 <h3>
     <a href="<%= edit_cat_url(@cat) %>">Edit</a>
 </h3>
 
-<h3>
-    <a href="<% @cat.destroy %>">Delete</a>
-</h3>
+<!-- <h3>
+    <a href="<%# @cat.destroy %>">Delete</a>
+</h3> -->

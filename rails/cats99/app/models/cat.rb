@@ -8,6 +8,12 @@ class Cat < ApplicationRecord
   validates(:color, presence: true, inclusion: COLORS)
   validates(:birth_date, presence: true)
 
+  has_many(:requests,
+    class_name: "CatRentalRequests",
+    primary_key: :id,
+    foreign_key: :cat_id
+  )
+
   def age
     time_ago_in_words(self.birth_date)
   end

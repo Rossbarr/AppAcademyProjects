@@ -11,8 +11,7 @@ class CatRentalRequests < ApplicationRecord
   belongs_to(:cat,
     class_name: 'Cat',
     primary_key: :id,
-    foreign_key: :cat_id,
-    dependent: :destroy 
+    foreign_key: :cat_id
   )
 
   def end_date_is_after_start_date
@@ -25,6 +24,11 @@ class CatRentalRequests < ApplicationRecord
     CatRentalRequests
       .where(cat_id: self.cat_id)
       .where.not("end_date < ? or start_date > ?", self.start_date, self.end_date)
+      .where.not(id: self.id)
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.where(status: "PENDING")
   end
 
   def overlapping_approved_requests
@@ -35,5 +39,21 @@ class CatRentalRequests < ApplicationRecord
     if overlapping_approved_requests.length > 0
       errors.add(:start_date, "overlaps with an existing approved request")
     end
+  end
+
+  def approve!
+    status = "APPROVED"
+    puts "Status: approved"
+    overlapping_pending_requests.each(&:deny!)
+    update_attributes(status: "APPROVED")
+  end
+
+  def deny!
+    status = "DENIED"
+    update_attributes(status: "DENIED")
+  end
+
+  def pending?
+    status == "PENDING"
   end
 end

@@ -16,6 +16,18 @@ class CatRentalRequestsController < ApplicationController
     end
   end
 
+  def update
+    @cat_rental_request = CatRentalRequests.find_by(id: params[:cat_rental_request][:id])
+
+    if params[:cat_rental_request][:status] == "APPROVED"
+      @cat_rental_request.approve!
+    elsif params[:cat_rental_request][:status] == "DENIED"
+      @cat_rental_request.deny!
+    end
+
+    redirect_to(cat_url(params[:id]))
+  end
+
   private
 
   def cat_rental_request_params

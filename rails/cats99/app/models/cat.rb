@@ -11,7 +11,8 @@ class Cat < ApplicationRecord
   has_many(:requests,
     class_name: "CatRentalRequests",
     primary_key: :id,
-    foreign_key: :cat_id
+    foreign_key: :cat_id,
+    dependent: :destroy
   )
 
   def age

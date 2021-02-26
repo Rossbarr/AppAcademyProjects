@@ -27,9 +27,25 @@
     </tr>
     <% @cat.requests.each do |request| %>
         <tr>
-            <th><%= request.start_date %></th>
-            <th><%= request.end_date %></th>
-            <th><%= request.status %></th>
+            <td><%= request.start_date %></td>
+            <td><%= request.end_date %></td>
+            <td>
+                <%= request.status %>
+                <% if request.pending? %>
+                    <form action="<%= cat_cat_rental_request_url(request) %>" method="post">
+                        <input type="hidden" name="_method" value="patch">
+                        <input type="hidden" name="cat_rental_request[id]" value="<%= request.id %>">
+                        <input type="hidden" name="cat_rental_request[status]" value="APPROVED">
+                        <input type="submit" value="Approve">
+                    </form>
+                    <form action="<%= cat_cat_rental_request_url(request) %>" method="post">
+                        <input type="hidden" name="_method" value="patch">
+                        <input type="hidden" name="cat_rental_request[id]" value="<%= request.id %>">
+                        <input type="hidden" name="cat_rental_request[status]" value="DENIED">
+                        <input type="submit" value="Deny">
+                    </form>
+                <% end %>
+            </td>
         </tr>
     <% end %>
 </table>

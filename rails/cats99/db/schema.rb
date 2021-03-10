@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_160855) do
+ActiveRecord::Schema.define(version: 2021_03_10_165900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "cat_rental_requests", force: :cascade do |t|
-    t.integer "cat_id", null: false
-    t.date "start_date", null: false
-    t.date "end_date", null: false
-    t.string "status", default: "PENDING", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cat_id"], name: "index_cat_rental_requests_on_cat_id"
-  end
 
   create_table "cats", force: :cascade do |t|
     t.string "name", null: false
@@ -37,6 +27,18 @@ ActiveRecord::Schema.define(version: 2021_03_10_160855) do
     t.index ["user_id"], name: "index_cats_on_user_id"
   end
 
+  create_table "rental_requests", force: :cascade do |t|
+    t.integer "cat_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "status", default: "PENDING", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["cat_id"], name: "index_rental_requests_on_cat_id"
+    t.index ["user_id"], name: "index_rental_requests_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", limit: 30, null: false
     t.string "password_digest", null: false
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_160855) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "cat_rental_requests", "cats", on_delete: :cascade
   add_foreign_key "cats", "users", on_delete: :cascade
+  add_foreign_key "rental_requests", "cats", on_delete: :cascade
+  add_foreign_key "rental_requests", "users"
 end

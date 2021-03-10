@@ -17,6 +17,13 @@ class User < ApplicationRecord
     through: :cats
   )
 
+  has_many(:submitted_requests,
+    class_name: "RentalRequests",
+    primary_key: :id,
+    foreign_key: :user_id,
+    dependent: :destroy
+  )
+
   def self.find_by_credentials(username, password)
     User.find_by(username: username)&.authenticate(password)
   end

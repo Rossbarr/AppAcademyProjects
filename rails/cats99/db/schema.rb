@@ -51,5 +51,5 @@ ActiveRecord::Schema.define(version: 2021_03_10_165900) do
 
   add_foreign_key "cats", "users", on_delete: :cascade
   add_foreign_key "rental_requests", "cats", on_delete: :cascade
-  add_foreign_key "rental_requests", "users"
+  add_foreign_key "rental_requests", "users", on_delete: :cascade
 end

@@ -16,6 +16,11 @@ class RentalRequests < ApplicationRecord
 
   delegate(:owner, to: :cat)
 
+  belongs_to(:requester,
+    class_name: "User",
+    primary_key: :id,
+    foreign_key: :user_id
+  )
 
   def end_date_is_after_start_date
     unless self.end_date > self.start_date

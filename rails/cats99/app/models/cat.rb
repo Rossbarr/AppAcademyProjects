@@ -7,12 +7,19 @@ class Cat < ApplicationRecord
   validates(:sex, presence: true)
   validates(:color, presence: true, inclusion: COLORS)
   validates(:birth_date, presence: true)
+  validates(:user_id, presence: true)
 
   has_many(:requests,
     class_name: "CatRentalRequests",
     primary_key: :id,
     foreign_key: :cat_id,
     dependent: :destroy
+  )
+
+  belongs_to(:owner,
+    class_name: "User",
+    primary_key: :id,
+    foreign_key: :user_id
   )
 
   def age

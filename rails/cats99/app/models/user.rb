@@ -6,6 +6,12 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
+  has_many(:cats,
+    class_name: "Cat",
+    primary_key: :id,
+    foreign_key: :user_id
+  )
+
   def self.find_by_credentials(username, password)
     User.find_by(username: username)&.authenticate(password)
   end

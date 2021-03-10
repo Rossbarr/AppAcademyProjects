@@ -20,7 +20,7 @@ class RentalRequestsController < ApplicationController
   end
 
   def update
-    @rental_request = RentalRequests.find_by(id: params[:rental_request][:id])
+    @rental_request = current_user.submitted_requests.find(params[:rental_request][:id])
 
     if params[:rental_request][:status] == "APPROVED"
       @cat_rental_request.approve!

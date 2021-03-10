@@ -30,7 +30,10 @@ class CatsController < ApplicationController
   end
 
   def show
-    @cat = Cat.find_by(id: params[:id])
+    @cat = Cat
+      .where(id: params[:id])
+      .includes(:requests, :owner)
+      .first
 
     if @cat
       render(:show)

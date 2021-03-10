@@ -7,7 +7,6 @@ class Cat < ApplicationRecord
   validates(:sex, presence: true)
   validates(:color, presence: true, inclusion: COLORS)
   validates(:birth_date, presence: true)
-  validates(:user_id, presence: true)
 
   has_many(:requests,
     class_name: "RentalRequest",

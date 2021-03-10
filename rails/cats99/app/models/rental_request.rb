@@ -1,12 +1,13 @@
-class RentalRequests < ApplicationRecord
+class RentalRequest < ApplicationRecord
 
   STATUSES = ["PENDING", "APPROVED", "DENIED"]
 
   validates(:cat_id, presence: true)
+  validates(:user_id, presence: true)
   validates(:start_date, presence: true)
   validates(:end_date, presence: true)
   validates(:status, presence: true, inclusion: STATUSES)
-  validate(:end_date_is_after_start_date, :does_not_overlap_approved_requests)
+  validate(:end_date_is_after_start_date, :does_not_overlap_approved_requests, :requester_cannot_be_owner)
 
   belongs_to(:cat,
     class_name: 'Cat',
@@ -23,13 +24,15 @@ class RentalRequests < ApplicationRecord
   )
 
   def end_date_is_after_start_date
-    unless self.end_date > self.start_date
-      errors.add(:end_date, "must be after start date")
+    if self.start_date and self.end_date
+      unless self.end_date > self.start_date
+        errors.add(:end_date, "must be after start date")
+      end
     end
   end
 
   def overlapping_requests
-    RentalRequests
+    RentalRequest
       .where(cat_id: self.cat_id)
       .where.not("end_date < ? or start_date > ?", self.start_date, self.end_date)
       .where.not(id: self.id)
@@ -45,7 +48,13 @@ class RentalRequests < ApplicationRecord
 
   def does_not_overlap_approved_requests
     if overlapping_approved_requests.length > 0
-      errors.add(:start_date, "overlaps with an existing approved request")
+      errors.add(:base, "Dates overlap with an existing approved request")
+    end
+  end
+
+  def requester_cannot_be_owner
+    if self.owner.id == self.user_id
+      errors.add(:base, "Requester cannot be owner")
     end
   end
 

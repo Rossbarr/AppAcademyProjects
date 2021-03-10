@@ -4,10 +4,18 @@
     <% action_url = cats_url %>
 <% end %>
 
+<%= render 'shared/errors' %>
+
 <form action="<%= action_url %>" method="post">
     <% if action == :edit %>
      <input type="hidden" name="_method" value="patch">
     <% end %>
+
+    <input
+        type="hidden"
+        name="authenticity_token"
+        value="<%= form_authenticity_token %>">
+
 
     <label for="name">Name</label>
     <input  id="name" type="text" name="cat[name]" value="<%= cat.name %>">

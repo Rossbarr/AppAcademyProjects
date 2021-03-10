@@ -2,16 +2,17 @@ class SessionsController < ApplicationController
   before_action :require_no_user, only: [:create, :new]
 
   def create
-    @user = User.find_by_credentials(
-      params[:user][:username], 
-      params[:user][:password]
-    )
+    @user = User.find_by(username: params[:user][:username])
 
-    if @user
+    if @user.nil?
+      @user = User.new(username: params[:user][:username])
+      flash.now[:errors] = ["No user with that username"]
+      render :new
+    elsif @user.authenticate(params[:user][:password])
       login!(@user)
       redirect_to cats_url
     else
-      flash.now[:errors] = @user.errors.full_messages
+      flash.now[:errors] = ["Incorrect password"]
       render :new
     end
   end

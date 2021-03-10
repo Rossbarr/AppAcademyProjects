@@ -14,11 +14,12 @@ class User < ApplicationRecord
   )
 
   has_many(:received_requests,
-    through: :cats
+    through: :cats,
+    source: :requests
   )
 
   has_many(:submitted_requests,
-    class_name: "RentalRequests",
+    class_name: "RentalRequest",
     primary_key: :id,
     foreign_key: :user_id,
     dependent: :destroy

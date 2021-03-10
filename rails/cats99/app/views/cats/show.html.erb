@@ -2,11 +2,13 @@
 
 <table>
     <tr>
+        <th>Owner</th>
         <th>Sex</th>
         <th>Color</th>
         <th>Age</th>
     </tr>
     <tr>
+        <td><%= @cat.owner.username %></td>
         <td><%= @cat.sex %></td>
         <td><%= @cat.color %></td>
         <td><%= @cat.age %></td>
@@ -24,36 +26,48 @@
         <th>Requestor</th>
         <th>Start Date</th>
         <th>End Date</th>
-        <th>Status</th>
+        <% if current_user == @cat.owner %>
+            <th>Status</th>
+        <% end %>
     </tr>
     <% @cat.requests.each do |request| %>
         <tr>
-            <td><%= request.owner.username %></td>
+            <td><%= request.requester.username %></td>
             <td><%= request.start_date %></td>
             <td><%= request.end_date %></td>
-            <td>
-                <%= request.status %>
-                <% if request.pending? %>
-                    <form action="<%= cat_cat_rental_request_url(request) %>" method="post">
-                        <input type="hidden" name="_method" value="patch">
-                        <input type="hidden" name="cat_rental_request[id]" value="<%= request.id %>">
-                        <input type="hidden" name="cat_rental_request[status]" value="APPROVED">
-                        <input type="submit" value="Approve">
-                    </form>
-                    <form action="<%= cat_cat_rental_request_url(request) %>" method="post">
-                        <input type="hidden" name="_method" value="patch">
-                        <input type="hidden" name="cat_rental_request[id]" value="<%= request.id %>">
-                        <input type="hidden" name="cat_rental_request[status]" value="DENIED">
-                        <input type="submit" value="Deny">
-                    </form>
-                <% end %>
-            </td>
+            <% if current_user == @cat.owner %>    
+                <td>
+                    <%= request.status %>
+                    <% if request.pending? %>
+                        <form action="<%= cat_rental_request_url(request) %>" method="post">
+                            <input
+                                type="hidden"
+                                name="authenticity_token"
+                                value="<%= form_authenticity_token %>">
+                            <input type="hidden" name="_method" value="patch">
+                            <input type="hidden" name="rental_request[id]" value="<%= request.id %>">
+                            <input type="hidden" name="rental_request[status]" value="APPROVED">
+                            <input type="submit" value="Approve">
+                        </form>
+                        <form action="<%= cat_rental_request_url(request) %>" method="post">
+                            <input
+                                type="hidden"
+                                name="authenticity_token"
+                                value="<%= form_authenticity_token %>">
+                            <input type="hidden" name="_method" value="patch">
+                            <input type="hidden" name="rental_request[id]" value="<%= request.id %>">
+                            <input type="hidden" name="rental_request[status]" value="DENIED">
+                            <input type="submit" value="Deny">
+                        </form>
+                    <% end %>
+                </td>
+            <% end %>
         </tr>
     <% end %>
 </table>
 
 <h3>
-    <a href="<%= new_cat_cat_rental_request_url(@cat) %>">Request rental</a>
+    <a href="<%= new_cat_rental_request_url(@cat) %>">Request rental</a>
 </h3>
 
 <h3>

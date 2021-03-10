@@ -1,0 +1,19 @@
+<%= render 'shared/errors' %>
+
+<form action="<%= cat_rental_requests_url(@cat) %>" method="post">
+    <input
+        type="hidden"
+        name="authenticity_token"
+        value="<%= form_authenticity_token %>">
+
+
+    <h1>Rental request for <%= @cat.name %></h1>
+
+    <label for="start_date">Start date:</label>
+    <input type="date" id="start_date" name="rental_request[start_date]">
+
+    <label for="end_date">End date</label>
+    <input type="date" id="end_date" name="rental_request[end_date]">
+
+    <input type="submit" value="Submit request">
+</form>

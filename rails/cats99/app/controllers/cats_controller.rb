@@ -9,10 +9,12 @@ class CatsController < ApplicationController
 
   def create
     @cat = Cat.new(cat_params)
+    @cat.owner = current_user
 
     if @cat.save
       redirect_to(cat_url(@cat))
     else
+      flash.now[:errors] = @cat.errors.full_messages
       render(:new)
     end
   end
@@ -29,7 +31,6 @@ class CatsController < ApplicationController
 
   def show
     @cat = Cat.find_by(id: params[:id])
-    @cat.owner = current_user
 
     if @cat
       render(:show)
@@ -44,6 +45,7 @@ class CatsController < ApplicationController
     if @cat.update_attributes(cat_params)
       redirect_to(cat_url(@cat))
     else
+      flash.now[:errors] = @cat.errors.full_messages
       render(:edit)
     end
   end
@@ -54,6 +56,7 @@ class CatsController < ApplicationController
     if @cat.destroy
       redirect_to(cats_url)
     else
+      flash.now[:errors] = ["YOU CAN'T DO THAT"]
       render(cat_url(@cat))
     end
   end

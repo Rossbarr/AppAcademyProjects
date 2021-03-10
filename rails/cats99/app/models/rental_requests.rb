@@ -1,4 +1,4 @@
-class CatRentalRequests < ApplicationRecord
+class RentalRequests < ApplicationRecord
 
   STATUSES = ["PENDING", "APPROVED", "DENIED"]
 
@@ -14,6 +14,9 @@ class CatRentalRequests < ApplicationRecord
     foreign_key: :cat_id
   )
 
+  delegate(:owner, to: :cat)
+
+
   def end_date_is_after_start_date
     unless self.end_date > self.start_date
       errors.add(:end_date, "must be after start date")
@@ -21,7 +24,7 @@ class CatRentalRequests < ApplicationRecord
   end
 
   def overlapping_requests
-    CatRentalRequests
+    RentalRequests
       .where(cat_id: self.cat_id)
       .where.not("end_date < ? or start_date > ?", self.start_date, self.end_date)
       .where.not(id: self.id)

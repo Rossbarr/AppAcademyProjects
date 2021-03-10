@@ -10,7 +10,7 @@ class Cat < ApplicationRecord
   validates(:user_id, presence: true)
 
   has_many(:requests,
-    class_name: "CatRentalRequests",
+    class_name: "RentalRequests",
     primary_key: :id,
     foreign_key: :cat_id,
     dependent: :destroy

@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     redirect_to cats_url if current_user
   end
 
+  def require_user
+    redirect_to new_session_url if current_user.nil?
+  end
+
   def login!(user)
     @current_user = user
     session[:session_token] = user.session_token

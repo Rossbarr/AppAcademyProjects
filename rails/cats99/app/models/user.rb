@@ -9,7 +9,12 @@ class User < ApplicationRecord
   has_many(:cats,
     class_name: "Cat",
     primary_key: :id,
-    foreign_key: :user_id
+    foreign_key: :user_id,
+    dependent: :destroy
+  )
+
+  has_many(:received_requests,
+    through: :cats
   )
 
   def self.find_by_credentials(username, password)

@@ -10,12 +10,7 @@
     <% if action == :edit %>
      <input type="hidden" name="_method" value="patch">
     <% end %>
-
-    <input
-        type="hidden"
-        name="authenticity_token"
-        value="<%= form_authenticity_token %>">
-
+    <%= auth_token %>
 
     <label for="name">Name</label>
     <input  id="name" type="text" name="cat[name]" value="<%= cat.name %>">

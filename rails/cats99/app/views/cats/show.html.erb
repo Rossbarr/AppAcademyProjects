@@ -40,21 +40,15 @@
                     <%= request.status %>
                     <% if request.pending? %>
                         <form action="<%= cat_rental_request_url(request) %>" method="post">
-                            <input
-                                type="hidden"
-                                name="authenticity_token"
-                                value="<%= form_authenticity_token %>">
                             <input type="hidden" name="_method" value="patch">
+                            <%= auth_token %>
                             <input type="hidden" name="rental_request[id]" value="<%= request.id %>">
                             <input type="hidden" name="rental_request[status]" value="APPROVED">
                             <input type="submit" value="Approve">
                         </form>
                         <form action="<%= cat_rental_request_url(request) %>" method="post">
-                            <input
-                                type="hidden"
-                                name="authenticity_token"
-                                value="<%= form_authenticity_token %>">
                             <input type="hidden" name="_method" value="patch">
+                            <%= auth_token %>
                             <input type="hidden" name="rental_request[id]" value="<%= request.id %>">
                             <input type="hidden" name="rental_request[status]" value="DENIED">
                             <input type="submit" value="Deny">

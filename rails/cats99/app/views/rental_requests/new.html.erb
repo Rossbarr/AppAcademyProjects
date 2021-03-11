@@ -1,11 +1,7 @@
 <%= render 'shared/errors' %>
 
 <form action="<%= cat_rental_requests_url(@cat) %>" method="post">
-    <input
-        type="hidden"
-        name="authenticity_token"
-        value="<%= form_authenticity_token %>">
-
+    <%= auth_token %>
 
     <h1>Rental request for <%= @cat.name %></h1>
 

@@ -71,3 +71,7 @@
 <!-- <h3>
     <a href="<%# @cat.destroy %>">Delete</a>
 </h3> -->
+
+<% content_for :footer do %>
+    <p>This is <%= @cat.name %>'s show page</p>
+<% end %>

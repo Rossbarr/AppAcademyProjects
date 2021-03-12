@@ -3,7 +3,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      
+      SessionToken.create(user_id: @user.id)
+      sessions[:session_token] = 
     else
       flash.new[:errors] = @user.errors.full_messages
       render :new

@@ -1,0 +1,21 @@
+<form action="users_url" method="post">
+  <%= auth_token %>
+  
+  <label for="username">Username (can be changed later!)</label>
+  <input id="username" type="text" name="user[username]">
+  <br>
+
+  <label for="email">Email (primary identifier)</label>
+  <input id="email" type="text" name="user[email]">
+  <br>
+
+  <label for="password">Password</label>
+  <input id="password" type="password" name="user[password]">
+  <br>
+
+  <label for="password_confirmation">Confirm Password</label>
+  <input id="password_confirmation" type="password" name="user[password_confirmation]">
+  <br>
+
+  <input type="submit" value="Create User!">
+</form>

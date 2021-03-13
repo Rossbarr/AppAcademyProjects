@@ -1,4 +1,6 @@
-<form action="session_url" method="post">
+<%= render 'shared/errors' %>
+
+<form action="<%= session_url %>" method="post">
   <%= auth_token %>
   
   <label for="email">Email (primary identifier)</label>

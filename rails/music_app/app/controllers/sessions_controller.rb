@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_no_user! only: [:new, :create]
+
   def new
     @user = User.new()
     render :new
@@ -8,8 +10,8 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:user][:email].downcase)
     
     if @user.authenticate(params[:user][:password])
-      SessionToken.new(user_id: @user.id)
-    #  redirect_to
+      login!(@user)
+      redirect_to user_url(@user)
     elsif @user.nil?
       flash.now[:errors] = "Could not find user with that email"
       @user = User.new(email: params[:user][:email])
@@ -20,10 +22,11 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destroy
-    session_token = SessionToken.find_by(session_token: session[:session_token])
+  def destroy(token = session[:session_token])
+    session_token = SessionToken.find_by(session_token: token)
     if session_token.destroy
-      # redirect_to
+      session[:session_token] = nil
+      redirect_to new_session_url
     end
   end
 end

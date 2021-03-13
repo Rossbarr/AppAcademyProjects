@@ -9,6 +9,9 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <header>
+    <%= login_or_logout %>
+  </header>
   <body>
     <%= yield %>
   </body>

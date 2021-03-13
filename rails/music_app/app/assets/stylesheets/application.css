@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- 
+
  html, body, header, nav, h1, a,
  ul, li, strong, main, button, i,
  section, img, div, h2, p, form,
@@ -33,9 +33,9 @@
      background: transparent;
  }
  
- ul {
+ /* ul {
      list-style: none;
- }
+ } */
  
  img {
      display: block;
@@ -43,7 +43,7 @@
      height: auto;
  }
  
- input[type="password"],
+ /* input[type="password"],
  input[type="email"],
  input[type="text"],
  input[type="submit"],
@@ -51,7 +51,7 @@
  button {
      -webkit-appearance: none;
      -moz-appearance: none;
- }
+ } */
  
  button, input[type="submit"] {
      cursor: pointer;

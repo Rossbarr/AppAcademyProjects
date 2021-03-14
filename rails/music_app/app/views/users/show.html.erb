@@ -1,7 +1,7 @@
-<h1>Welcome to <%= @user.username %>'s show page! </h1>
+<% content_for :header do %>
+  <h1 class="title">Welcome to <%= @user.username %>'s show page!</h1>
+<% end %>
 
-<ul>
-  <li>
-    Username: <%= @user.username %>
-  </li>
-</ul>
+<div class="content">
+  Username: <%= @user.username %>
+</div>

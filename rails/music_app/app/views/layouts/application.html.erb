@@ -9,12 +9,21 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <header>
-    <h1>Music App!</h1>
+  <header class="header">
+    <nav class="header-nav cf">
+      <h1 class="header-logo">
+        <a href=#>Music App!</a>
+      </h1>
 
-    <%= login_or_logout %>
+      <%= yield :header %>
+
+      <%= login_or_logout %>
+    </nav>
   </header>
-  <body>
+  <body class="body">
     <%= yield %>
   </body>
+  <footer class="footer">
+    <%= yield :footer %>
+  </footer>
 </html>

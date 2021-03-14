@@ -1,0 +1,35 @@
+.header {
+  background-color: var(--lp);
+  color: var(--dp);
+  font-size: 20px;
+}
+
+.header-nav {
+  // width: 75%;
+  // margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header-logo {
+  float: left;
+}
+
+.title {
+  background-color: var(--o);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.login-or-logout, .login-or-logout a, .header-list {
+  float: right;
+}
+
+.header a, .header form {
+  background-color: var(--o);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}

@@ -11,19 +11,19 @@ module ApplicationHelper
   def login_or_logout
     if current_user.nil?
       html =  "<ul class='header-list'>"
-      html += "  <li class='login-or-logout'>"
+      html += "  <li class='login-or-logout cf'>"
       html += "    <a href='#{new_session_url}'>Log in!</a>"
       html += "  </li>"
-      html += "  <li class='login-or-logout'>"
+      html += "  <li class='login-or-logout cf'>"
       html += "    <a href='#{new_user_url}'>Sign up!</a>"
       html += "  </li>"
       html += "</ul>"
     else
       html =  "<ul class='header-list'>"
-      html += "  <li class='login-or-logout'>"
+      html += "  <li class='login-or-logout cf'>"
       html += "    <a href='#{user_url(current_user)}'>#{current_user.username}</a>"
       html += "  </li>"
-      html += "  <li class='login-or-logout'>"
+      html += "  <li class='login-or-logout cf'>"
       html += "    <form action='#{session_url}' method='POST'>"
       html += "      <input type='hidden' name='_method' value='delete'>"
       html += "      #{auth_token}"

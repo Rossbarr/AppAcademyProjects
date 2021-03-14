@@ -9,15 +9,15 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:user][:email].downcase)
     
-    if @user.authenticate(params[:user][:password])
-      login!(@user)
-      redirect_to user_url(@user)
-    elsif @user.nil?
-      flash.now[:errors] = "Could not find user with that email"
+    if @user.nil?
+      flash.now[:errors] = ["Could not find user with that email"]
       @user = User.new(email: params[:user][:email])
       render :new
+    elsif @user.authenticate(params[:user][:password])
+      login!(@user)
+      redirect_to user_url(@user)
     else
-      flash.now[:errors] = @user.errors.full_messages
+      flash.now[:errors] = ["Incorrect password"]
       render :new
     end
   end

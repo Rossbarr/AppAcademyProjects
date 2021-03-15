@@ -1,5 +1,11 @@
+<% content_for :header do %>
+  <div class='title cf'>
+    <h1>Log in page</h1>
+  </div>
+<% end %>
+
 <div class='login'>
-  <form action="<%= session_url %>" method="post">
+  <form class="log-in-form" action="<%= session_url %>" method="post">
     <%= auth_token %>
     
     <div class='login-item'>
@@ -12,7 +18,9 @@
       <input id="password" type="password" name="user[password]">
     </div>
 
-    <%= render 'shared/errors' %>
+    <div class='login-item'>
+      <%= render 'shared/errors' %>
+    </div>
 
     <div class="login-item">
       <input class="submit_button" type="submit" value="Log in!">

@@ -16,7 +16,12 @@
 
 @import "variables";
 @import "header";
-@import "body";
+@import "main";
+
+body {
+    color: var(--o);
+    background-color: var(--dp);
+}
 
 .cf::after {
     content: "";

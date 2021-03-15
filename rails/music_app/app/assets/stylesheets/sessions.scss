@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .login {
-  margin: 0 auto;
   border: var(--dr);
   border-radius: 10px;
   padding: 30px;
@@ -13,7 +12,7 @@
   height: auto;
 }
 
-form {
+.log-in-form {
   display: flex;
   flex-direction: column;
 }
@@ -22,22 +21,21 @@ form {
   padding: 5px;
 }
 
-label {
+.log-in-form label {
   padding-bottom: 5px;
   padding-top: 10px;
   text-align: center;
 }
 
-input {
+.log-in-form input {
   background-color: var(--p);
   width: 100%;
-  margin: 0 auto;
   padding-top: 5px;
   padding-bottom: 5px;
   text-align: left;
 }
 
-input[type='submit'] {
+.log-in-form input[type='submit'] {
   border-radius: 10px;
   text-align: center;
 }

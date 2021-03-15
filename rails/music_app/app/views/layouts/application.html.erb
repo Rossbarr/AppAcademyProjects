@@ -9,21 +9,31 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <header class="header">
-    <nav class="header-nav">
-      <h1 class="header-logo">
-        <a class='cf' href=#>Music App!</a>
-      </h1>
-
-      <%= yield :header %>
-
-      <%= login_or_logout %>
-    </nav>
-  </header>
   <body class="body">
-    <%= yield %>
+    <header class="header">
+      <nav class="header-nav">
+        <div class='header-item'>
+          <div class='header-logo'>
+            <a class='cf' href=#>Music App!</a>
+          </div>
+        </div>
+
+        <div class='header-item'>
+          <div class='header-title'>
+            <%= yield :header %>
+          </div>
+        </div>
+
+        <div class="header-login-or-logout header-item">
+          <%= login_or_logout %>
+        </div>
+      </nav>
+    </header>
+      <main class="main">
+      <%= yield %>
+    </main>
+    <footer class="footer">
+      <%= yield :footer %>
+    </footer>
   </body>
-  <footer class="footer">
-    <%= yield :footer %>
-  </footer>
 </html>

@@ -1,23 +1,39 @@
-<%= render 'shared/errors' %>
+<% content_for :header do %>
+  <div class='title cf'>
+    <h1>Sign up page</h1>
+  </div>
+<% end %>
 
-<form action="<%= users_url %>" method="post">
-  <%= auth_token %>
-  
-  <label for="username">Username (can be changed later!)</label>
-  <input id="username" type="text" name="user[username]">
-  <br>
+<div class='sign-up'>
+  <form class="sign-up-form" action="<%= users_url %>" method="post">
+    <%= auth_token %>
+    
+    <div class="sign-up-item">
+      <label for="username">Username (can be changed later!)</label>
+      <input id="username" type="text" name="user[username]">
+    </div>
 
-  <label for="email">Email (primary identifier)</label>
-  <input id="email" type="text" name="user[email]">
-  <br>
+    <div class="sign-up-item">
+      <label for="email">Email (primary identifier)</label>
+      <input id="email" type="text" name="user[email]">
+    </div>
 
-  <label for="password">Password</label>
-  <input id="password" type="password" name="user[password]">
-  <br>
+    <div class="sign-up-item">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="user[password]">
+    </div>
 
-  <label for="password_confirmation">Confirm Password</label>
-  <input id="password_confirmation" type="password" name="user[password_confirmation]">
-  <br>
+    <div class="sign-up-item">
+      <label for="password_confirmation">Confirm Password</label>
+      <input id="password_confirmation" type="password" name="user[password_confirmation]">
+    </div>
 
-  <input type="submit" value="Create User!">
-</form>
+    <div class="sign-up-item">
+      <%= render 'shared/errors' %>
+    </div>
+
+    <div class="sign-up-item">
+      <input type="submit" value="Create User!">
+    </div>
+  </form>
+</div>

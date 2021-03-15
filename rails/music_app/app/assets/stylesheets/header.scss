@@ -2,30 +2,39 @@
   background-color: var(--lp);
   color: var(--dp);
   font-size: 20px;
+  text-align: center;
 }
 
 .header-nav {
-  // width: 75%;
-  // margin: 0 auto;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
-.title {
-  background-color: var(--o);
-  margin: 0 auto;
-  padding: 10px;
-  border-radius: 10px;
+.header-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-item:first-child {
+  margin-right: auto;
+}
+
+.header-item:last-child {
+  margin-left: auto;
 }
 
 .header-list {
   display: flex;
 }
 
-.header a, .header form {
+.header-logo, .header-title, 
+.header-log-in, .header-sign-up, 
+.header-username, .header-sign-out form input {
   background-color: var(--o);
-  margin: 10px;
-  padding: 10px;
+  margin: 5px;
+  padding: 5px;
   border-radius: 10px;
 }

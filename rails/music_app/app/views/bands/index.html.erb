@@ -1,0 +1,17 @@
+<% content_for :header do %>
+  <h1 class='title'>Bands index page</h1>
+<% end %>
+
+<% @bands.each do |band| %>
+  <ul>
+    <li>
+      <a href='<%= band_url(band) %>'><%= band.name %></a>
+    </li>
+  </ul>
+<% end %>
+
+<ul>
+  <li>
+    <a href='<%= new_band_url %>'>Create New Band</a>
+  </li>
+</ul>

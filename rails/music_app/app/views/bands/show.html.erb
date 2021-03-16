@@ -1,0 +1,20 @@
+<% content_for :header do %>
+  <h1 class='title'><%= @band.name %>'s page</h1>
+<% end %>
+
+<p>
+  <%= @band.name %>
+</p>
+
+<ul>
+  <li>
+    <a href='<%= edit_band_url(@band) %>'>Edit</a>
+  </li>
+  <li>
+    <form action='<%= band_url(@band) %>' method='POST'>
+      <input type='hidden' name='_method' value='DELETE'>
+      <%= auth_token %>
+      <input type='submit' value='Delete'>
+    </form>
+  </li>
+</ul>

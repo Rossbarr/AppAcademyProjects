@@ -1,0 +1,60 @@
+<% action_url = album.persisted? ? album_url(album) : albums_url %>
+<% form_method = album.persisted? ? "PATCH" : "POST" %>
+<% submit_text = album.persisted? ? "Update album" : "Create album" %>
+
+<% content_for :header do %>
+  <h1><%= submit_text %> form</h1>
+<% end %>
+
+<div class='div-for-form'>
+  <form class='form' action='<%= action_url %>' method="POST">
+    <input type='hidden' name='_method' value='<%= form_method %>'>
+    <%= auth_token %>
+
+    <div class='form-item'>
+      <label for='album_name'>Album Name</label>
+      <input type="text" id='album_name' name='album[name]' value='<%= album.name %>'>
+    </div>
+    
+    <div class='form-item'>
+      <label for='album_year'>Album Year</label>
+      <input type="date" id='album_year' name='album[year]' value="<%= album.year %>">
+    </div>
+
+    <div class='form-item'>
+      <label for='album_type'>Recorded</label>
+      <select id='album_type' name='album[how_recorded]'>
+        <option disabled selected>
+          -- SELECT --
+        </option>
+        <% album.class::RECORDED_VALUES.each do |type| %>
+          <option <%= album.how_recorded == type ? "selected" : "" %>>
+            <%= type %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class='form-item'>
+      <label for='album_band'>Artist</label>
+      <select id='album_band' name='album[band_id]'>
+        <option disabled selected>
+          -- SELECT BAND --
+        </option>
+        <% bands.all.each do |band| %>
+          <option value='<%= band.id %>' <%= album.band == band ? "selected" : "" %>>
+            <%= band.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class='form-item'>
+      <%= render 'shared/errors' %>
+    </div>
+
+    <div class='form-item'>
+      <input type='submit' value="<%= submit_text %>!">
+    </div>
+  </form>
+</div>

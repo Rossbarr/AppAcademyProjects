@@ -4,25 +4,25 @@
   </div>
 <% end %>
 
-<div class='login'>
-  <form class="log-in-form" action="<%= session_url %>" method="post">
+<div class='div-for-form'>
+  <form class="form" action="<%= session_url %>" method="post">
     <%= auth_token %>
     
-    <div class='login-item'>
+    <div class='form-item'>
       <label for="email">Email (primary identifier)</label>
       <input id="email" type="text" name="user[email]">
     </div>
 
-    <div class='login-item'>
+    <div class='form-item'>
       <label for="password">Password</label>
       <input id="password" type="password" name="user[password]">
     </div>
 
-    <div class='login-item'>
+    <div class='form-item'>
       <%= render 'shared/errors' %>
     </div>
 
-    <div class="login-item">
+    <div class="form-item">
       <input class="submit_button" type="submit" value="Log in!">
     </div>
   </form>

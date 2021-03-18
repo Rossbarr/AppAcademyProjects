@@ -1,0 +1,41 @@
+<% content_for :header do %>
+  <h1 class='title'><%= @album.name %></h1>
+<% end %>
+
+<div class='body-container'>
+  <div class='body-box'>
+    <a href='<%= band_url(@album.band) %>'>Back to <%= @album.band.name %></a>
+  </div>
+
+  <div class='body-box'>
+    <table class='table'>
+      <tr>
+        <th class='table-head'>Album Title</th>
+        <th class='table-head'>Artist</th>
+        <th class='table-head'>Year</th>
+        <th class='table-head'>Recorded</th>
+      </tr>
+      <tr>
+        <td class='table-data'><%= @album.name %></td>
+        <td class='table-data'><%= @album.band.name %></td>
+        <td class='table-data'><%= @album.year %></td>
+        <td class='table-data'><%= @album.how_recorded %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class='body-box'>
+    <ul>
+      <li class='edit-button'>
+        <a href='<%= edit_album_url(@album) %>'>Edit</a>
+      </li>
+      <li class='delete-button'>
+        <form action='<%= album_url(@album) %>' method='POST'>
+          <input type='hidden' name='_method' value='DELETE'>
+          <%= auth_token %>
+          <input type="submit" value='Delete'>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>

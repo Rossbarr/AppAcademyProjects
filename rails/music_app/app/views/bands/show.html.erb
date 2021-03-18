@@ -1,20 +1,43 @@
 <% content_for :header do %>
-  <h1 class='title'><%= @band.name %>'s page</h1>
+  <h1 class='title'><%= @band.name %></h1>
 <% end %>
 
-<p>
-  <%= @band.name %>
-</p>
+<div class='main-container'>
+  <div class='main-box'>
+    <table class="table">
+      <tr>
+        <th class="table-head">Album</th>
+        <th class="table-head">year</th>
+      </tr>
+      <% @band.albums.each do |album| %>
+        <tr>
+          <td class="table-data">
+            <a href='<%= album_url(album) %>'><%= album.name %></a>
+          </td>
+          <td class="table-data">
+            <%= album.year %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  
+  <div class='main-box'>
+    <a class='new-button' href='<%= new_band_album_url(@band) %>'>New Album</a>
+  </div>
 
-<ul>
-  <li>
-    <a href='<%= edit_band_url(@band) %>'>Edit</a>
-  </li>
-  <li>
-    <form action='<%= band_url(@band) %>' method='POST'>
-      <input type='hidden' name='_method' value='DELETE'>
-      <%= auth_token %>
-      <input type='submit' value='Delete'>
-    </form>
-  </li>
-</ul>
+  <div class='main-box'>
+    <ul class='edit-or-delete'>
+      <li class="edit-button">
+        <a href='<%= edit_band_url(@band) %>'>Edit</a>
+      </li>
+      <li class="delete-button">
+        <form action='<%= band_url(@band) %>' method='POST'>
+          <input type='hidden' name='_method' value='DELETE'>
+          <%= auth_token %>
+          <input type='submit' value='Delete'>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>

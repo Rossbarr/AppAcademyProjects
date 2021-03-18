@@ -2,16 +2,23 @@
   <h1 class='title'>Bands index page</h1>
 <% end %>
 
-<% @bands.each do |band| %>
-  <ul>
-    <li>
-      <a href='<%= band_url(band) %>'><%= band.name %></a>
-    </li>
-  </ul>
-<% end %>
+<div class="main-container">
+  <div class='main-box'>
+    <table class='table'>
+      <tr>
+        <th class='table-head'>Bands</th>
+      </tr>
+      <% @bands.each do |band| %>
+        <tr>
+          <td class='table-data'>
+            <a href='<%= band_url(band) %>'><%= band.name %></a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 
-<ul>
-  <li>
-    <a href='<%= new_band_url %>'>Create New Band</a>
-  </li>
-</ul>
+  <div class="main-box">
+    <a class='new-button' href='<%= new_band_url %>'>Create New Band</a>
+  </div>
+</div>

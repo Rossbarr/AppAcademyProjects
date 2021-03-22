@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_action :require_user!, only: [:create, :new, :edit, :update, :destroy]
+
   def create
     @track = Track.new(tracks_params)
 

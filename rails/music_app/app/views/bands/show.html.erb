@@ -8,6 +8,7 @@
       <tr>
         <th class="table-head">Album</th>
         <th class="table-head">year</th>
+        <th class="table-head">Number of Tracks</th>
       </tr>
       <% @band.albums.each do |album| %>
         <tr>
@@ -16,6 +17,9 @@
           </td>
           <td class="table-data">
             <%= album.year %>
+          </td>
+          <td class="table-data">
+            <%= album.num_tracks %>
           </td>
         </tr>
       <% end %>

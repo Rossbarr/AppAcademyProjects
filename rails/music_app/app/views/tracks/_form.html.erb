@@ -1,0 +1,63 @@
+<% action_url = track.persisted? ? track_url(track) : tracks_url %>
+<% form_method = track.persisted? ? "PATCH" : "POST" %>
+<% submit_text = track.persisted? ? "Update track" : "Create track" %>
+
+<% content_for :header do %>
+  <h1><%= submit_text %> form</h1>
+<% end %>
+
+<div class='div-for-form'>
+  <form class='form' action='<%= action_url %>' method="POST">
+    <input type='hidden' name='_method' value='<%= form_method %>'>
+    <%= auth_token %>
+
+    <div class='form-item'>
+      <label for='track_title'>Title</label>
+      <input type="text" id='track_title' name='track[title]' value='<%= track.title %>'>
+    </div>
+    
+    <div class='form-item'>
+      <label for='track_ord'>Track Order Number</label>
+      <input type="number" id='track_ord' name='track[ord]' value="<%= track.ord %>">
+    </div>
+
+    <div class='form-item'>
+      <label for='track_is_regular'>Bonus Track?</label>
+      <select id='track_is_regular' name='track[is_regular]'>
+        <option>
+          False
+        </option>
+        <option <%= track.is_regular == false ? "selected" : "" %>>
+          True
+        </option>
+      </select>
+    </div>
+
+    <div class='form-item'>
+      <label for='track_album'>Album</label>
+      <select id='track_album' name='track[album_id]'>
+        <option disabled selected>
+          -- SELECT ALBUM --
+        </option>
+        <% albums.all.each do |album| %>
+          <option value='<%= album.id %>' <%= track.album == album ? "selected" : "" %>>
+            <%= album.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class='form-item'>
+      <label for='track_lyrics'>Lyrics</label>
+      <textarea id='track_lyrics' name=track[lyrics]></textarea>
+    </div>
+
+    <div class='form-item'>
+      <%= render 'shared/errors' %>
+    </div>
+
+    <div class='form-item'>
+      <input type='submit' value="<%= submit_text %>!">
+    </div>
+  </form>
+</div>

@@ -21,11 +21,11 @@ class AlbumsController < ApplicationController
     @album = Album.find_by(id: params[:id])
     @bands = Band.all
 
-    # if @album
-    render :edit
-    # else
-    #   redirect_to bands_url
-    # end
+    if @album
+      render :edit
+    else
+      redirect_to bands_url
+    end
   end
 
   def show
@@ -53,10 +53,10 @@ class AlbumsController < ApplicationController
     @album = Album.find_by(id: params[:id])
 
     if @album.destroy
-      redirect_to album_url(@album)
+      redirect_to band_url(params[@album.band])
     else
       flash[:errors] = @album.errors.full_messages
-      redirect_to band_url(params[@album.band])
+      redirect_to album_url(@album)
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_164411) do
+ActiveRecord::Schema.define(version: 2021_03_19_153856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 2021_03_18_164411) do
     t.index ["user_id"], name: "index_session_tokens_on_user_id"
   end
 
+  create_table "tracks", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "album_id", null: false
+    t.integer "ord", default: 0
+    t.text "lyrics"
+    t.boolean "is_regular", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id", "title"], name: "index_tracks_on_album_id_and_title"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -52,4 +63,5 @@ ActiveRecord::Schema.define(version: 2021_03_18_164411) do
 
   add_foreign_key "albums", "bands", on_delete: :cascade
   add_foreign_key "session_tokens", "users", on_delete: :cascade
+  add_foreign_key "tracks", "albums", on_delete: :cascade
 end

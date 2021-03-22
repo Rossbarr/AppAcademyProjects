@@ -7,4 +7,14 @@ class Album < ApplicationRecord
   validates(:how_recorded, presence: true, inclusion: RECORDED_VALUES)
 
   belongs_to(:band)
+
+  has_many(:tracks)
+
+  def sibling_albums
+    self.band.albums
+  end
+
+  def num_tracks
+    self.tracks.length
+  end
 end

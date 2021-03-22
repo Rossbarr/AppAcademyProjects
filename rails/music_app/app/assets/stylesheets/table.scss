@@ -2,12 +2,16 @@
   background-color: var(--dr);
   padding: 5px;
   border-radius: 5px;
+  text-align: center;
 }
 
 .table-head {
   border: 2px solid var(--dp);
+  padding: 5px;
+  font-weight: bold;
 }
 
 .table-data {
   border: 1px solid var(--dp);
+  padding: 3px;
 }

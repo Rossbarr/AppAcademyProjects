@@ -1,0 +1,41 @@
+<% content_for :header do %>
+  <h1 class='title'><%= @track.title %></h1>
+<% end %>
+
+<div class='body-container'>
+  <div class='body-box'>
+    <a href='<%= album_url(@track.album) %>'>Back to album page</a>
+  </div>
+
+  <div class='body-box'>
+    <table class='table'>
+      <tr>
+        <th class='table-head'>Track Title</th>
+        <th class='table-head'>Artist</th>
+        <th class='table-head'>Ord</th>
+        <th class='table-head'>Bonus?</th>
+      </tr>
+      <tr>
+        <td class='table-data'><%= @track.title %></td>
+        <td class='table-data'><%= @track.band.name %></td>
+        <td class='table-data'><%= @track.ord %></td>
+        <td class='table-data'><%= !@track.is_regular %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class='body-box'>
+    <ul>
+      <li class='edit-button'>
+        <a href='<%= edit_track_url(@track) %>'>Edit</a>
+      </li>
+      <li class='delete-button'>
+        <form action='<%= track_url(@track) %>' method='POST'>
+          <input type='hidden' name='_method' value='DELETE'>
+          <%= auth_token %>
+          <input type="submit" value='Delete'>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>

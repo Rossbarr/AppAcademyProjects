@@ -1,0 +1,17 @@
+<% action_url = note.persisted? ? note_url(note) : notes_url %>
+<% form_method = note.persisted? ? "PATCH" : "POST" %>
+
+<div class='div-for-form'>
+  <form class='form' action='<%= action_url %>' method='POST'>
+    <input type='hidden' name='_method' value='<%= form_method %>'>
+    <%= auth_token %>
+    <input type='hidden' name='note[track_id]' value='<%= track_id %>'>
+
+    <div class='form-item'>
+      <label class='label' for='note'>Your Notes</label>
+      <textarea class='input_textarea' id='note' name='note[note]'><%= note.note %></textarea>
+
+      <input class='input_submit' type='submit' value='Save Notes'>
+    </div>
+  </form>
+</div>

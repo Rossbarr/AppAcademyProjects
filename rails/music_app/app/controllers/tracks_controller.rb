@@ -26,6 +26,7 @@ class TracksController < ApplicationController
 
   def show
     @track = Track.find_by(id: params[:id])
+    @note = current_user.note_for(@track)
     render :show
   end
 

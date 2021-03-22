@@ -38,4 +38,10 @@
       </li>
     </ul>
   </div>
+
+  <% if @current_user %>
+    <div class="main-box">
+      <%= render 'notes/form', note: @note, track_id: @track.id %>
+    </div>
+  <% end %>
 </div>

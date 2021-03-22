@@ -28,6 +28,15 @@ class NotesController < ApplicationController
   end
 
   def destroy
+    @note = Note.find_by(user_id: current_user.id, track_id: params[:note][:track_id])
+    @track = Track.find_by(id: params[:note][:track_id])
+
+    if @note.destroy
+      redirect_to track_url(@track)
+    else
+      flash[:errors] = @note.errors.full_messages
+      redirect_to track_url(@track)
+    end
   end
 
   private

@@ -17,13 +17,13 @@
   padding: 5px;
 }
 
-.form-item label {
+.form-item .label {
   padding-bottom: 5px;
   padding-top: 10px;
   text-align: center;
 }
 
-.form-item input, .form-item select, .form-item textarea {
+.input_text, .input_password, .input_number, .input_date, .input_select, .input_textarea {
   color: var(--o);
   background-color: var(--p);
   width: 100%;
@@ -33,9 +33,17 @@
   resize: vertical;
 }
 
-.form-item input[type='submit'] {
+.radio-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_submit {
+  color: var(--dp);
+  background-color: var(--o);
   border-radius: 10px;
   text-align: center;
+  padding: 5px;
 }
 
 .new-button, .edit-button, .delete-button {

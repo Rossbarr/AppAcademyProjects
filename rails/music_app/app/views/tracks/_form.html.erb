@@ -12,35 +12,40 @@
     <%= auth_token %>
 
     <div class='form-item'>
-      <label for='track_title'>Title</label>
-      <input type="text" id='track_title' name='track[title]' value='<%= track.title %>'>
+      <label class='label' for='track_title'>Title</label>
+      <input class='input_text' type="text" id='track_title' name='track[title]' value='<%= track.title %>'>
     </div>
     
     <div class='form-item'>
-      <label for='track_ord'>Track Order Number</label>
-      <input type="number" id='track_ord' name='track[ord]' value="<%= track.ord %>">
+      <label class='label' for='track_ord'>Track Order Number</label>
+      <input class='input_number' type="number" id='track_ord' name='track[ord]' value="<%= track.ord %>">
     </div>
 
     <div class='form-item'>
-      <label for='track_is_regular'>Bonus Track?</label>
-      <select id='track_is_regular' name='track[is_regular]'>
-        <option>
-          False
-        </option>
-        <option <%= track.is_regular == false ? "selected" : "" %>>
-          True
-        </option>
-      </select>
+      <label class='label' for='bonus_track_buttons'>Bonus Track</label>
+      <div class='radio-buttons' id='bonus_track_buttons'>
+        <div>
+          <input class='input_radio' type='radio' id='true' name='track[is_regular]'
+            <%= @track.is_bonus ? "checked" : "" %>>
+          <label class='label_radio' for='true'>True</label>
+        </div>
+
+        <div>
+          <input class='input_radio' type='radio' id='false' name='track[is_regular]'
+            <%= @track.is_bonus ? "" : "checked" %>>
+          <label class='label_radio' for='false'>False</label>
+        </div>
+      </div>
     </div>
 
     <div class='form-item'>
-      <label for='track_album'>Album</label>
-      <select id='track_album' name='track[album_id]'>
+      <label class='label' for='track_album'>Album</label>
+      <select class='input_select' id='track_album' name='track[album_id]'>
         <option disabled selected>
           -- SELECT ALBUM --
         </option>
         <% albums.all.each do |album| %>
-          <option value='<%= album.id %>' <%= track.album == album ? "selected" : "" %>>
+          <option class='select_option' value='<%= album.id %>' <%= track.album == album ? "selected" : "" %>>
             <%= album.name %>
           </option>
         <% end %>
@@ -48,8 +53,8 @@
     </div>
 
     <div class='form-item'>
-      <label for='track_lyrics'>Lyrics</label>
-      <textarea id='track_lyrics' name=track[lyrics]></textarea>
+      <label class='label' for='track_lyrics'>Lyrics</label>
+      <textarea class='input_textarea' id='track_lyrics' name=track[lyrics]></textarea>
     </div>
 
     <div class='form-item'>
@@ -57,7 +62,7 @@
     </div>
 
     <div class='form-item'>
-      <input type='submit' value="<%= submit_text %>!">
+      <input class='input_submit' type='submit' value="<%= submit_text %>!">
     </div>
   </form>
 </div>

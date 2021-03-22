@@ -3,11 +3,11 @@
 <% end %>
 
 <div class='body-container'>
-  <div class='body-box'>
+  <div class='main-box'>
     <a href='<%= band_url(@album.band) %>'>Back to band page</a>
   </div>
 
-  <div class='body-box'>
+  <div class='main-box'>
     <table class='table'>
       <tr>
         <th class='table-head'>Album Title</th>
@@ -29,7 +29,7 @@
       <tr>
         <th class='table-head'>Song Title</th>
         <th class="table-head">Order Number</th>
-        <th class='table-head'>Bonus?</th>
+        <th class='table-head'>Bonus Track</th>
       </tr>
       <% @album.tracks.sort_by(&:ord).each do |track| %>
         <tr>
@@ -37,7 +37,7 @@
             <a href='<%= track_url(track) %>'><%= track.title %></a>
           </td>
           <td class='table-data'><%= track.ord %></td>
-          <td class='table-data'><%= !track.is_regular %></td>
+          <td class='table-data'><%= track.is_bonus %></td>
         </tr>
       <% end %>
     </table>
@@ -48,8 +48,8 @@
   </div>
 
 
-  <div class='body-box'>
-    <ul>
+  <div class='main-box'>
+    <ul class='edit-or-delete'>
       <li class='edit-button'>
         <a href='<%= edit_album_url(@album) %>'>Edit</a>
       </li>

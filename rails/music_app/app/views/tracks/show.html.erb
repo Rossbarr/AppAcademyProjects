@@ -3,28 +3,28 @@
 <% end %>
 
 <div class='body-container'>
-  <div class='body-box'>
+  <div class='main-box'>
     <a href='<%= album_url(@track.album) %>'>Back to album page</a>
   </div>
 
-  <div class='body-box'>
+  <div class='main-box'>
     <table class='table'>
       <tr>
         <th class='table-head'>Track Title</th>
         <th class='table-head'>Artist</th>
         <th class='table-head'>Ord</th>
-        <th class='table-head'>Bonus?</th>
+        <th class='table-head'>Bonus Track</th>
       </tr>
       <tr>
         <td class='table-data'><%= @track.title %></td>
         <td class='table-data'><%= @track.band.name %></td>
         <td class='table-data'><%= @track.ord %></td>
-        <td class='table-data'><%= !@track.is_regular %></td>
+        <td class='table-data'><%= @track.is_bonus %></td>
       </tr>
     </table>
   </div>
 
-  <div class='body-box'>
+  <div class='main-box'>
     <ul>
       <li class='edit-button'>
         <a href='<%= edit_track_url(@track) %>'>Edit</a>

@@ -9,7 +9,9 @@ class User < ApplicationRecord
   has_many(:notes, dependent: :destroy)
 
   def lowercase_email
-    self.email = self.email.downcase
+    if self.email.respond_to?(:downcase)
+      self.email = self.email.downcase
+    end
   end
 
   def note_for(track)

@@ -49,3 +49,20 @@ function mysteryScoping4() {
 // mysteryScoping3(); // Throws an error at definition; x has already been declared
 // mysteryScoping4(); // 'in block'; 'out of block'
 // mysteryScoping5(); // Throws an error at definition; x has already been declared
+
+function madLib(verb, adj, noun) {
+  console.log("We shall", verb, "the", adj, noun)
+}
+
+madLib('make', 'best', 'guac')
+
+function isSubstring (searchString, subString) {
+  if (searchString.search(subString) == -1) {
+    return false
+  } else {
+    return true
+  }
+}
+
+console.log(isSubstring("time to program", "time"))
+console.log(isSubstring("Jump for joy", "joys"))

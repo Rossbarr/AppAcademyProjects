@@ -30,24 +30,28 @@ Array.prototype.twoSum = function(target = 0) {
 // console.log([2,3,4,6,5,6].twoSum(9))
 
 Array.prototype.transpose = function() {
-  let max = -Infinity;
+  let cols = -Infinity;
+  const rows = this.length;
   let index = -1;
-  this.forEach(function(a, i){
-    if (a.length > max) {
-      max = a.length;
+  this.forEach(function(a, i) {
+    if (a.length > cols) {
+      cols = a.length;
       index = i;
     }
   });
 
   // Create an array of transposed size filled with null
-  const new_array = Array(max).fill(Array(this.length).fill(null))
+  const new_array = Array(cols).fill(Array(rows).fill(null))
 
-  for (let i = 0; i < this.length; i++) {
-    for (let j = 0; j < this[i].length; j++) {
-      new_array[j].push(this[i][j]);
+  for (let j = 0; j < cols; j++) {
+    new_array[j] = Array(cols);
+  }
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      new_array[j][i] = this[i][j];
     }
   }
   return new_array;
 }
 
-console.log([[1,2,3,4],[3,2],[2],[1]].transpose());
+console.log([[1,2,3,4],[3,2],[2]].transpose());
